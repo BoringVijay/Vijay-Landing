@@ -1,0 +1,1249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="FitOS 90">
+<title>FitOS — 90 Day Protocol</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#06060a;--s1:#0f0f15;--s2:#17171f;--s3:#1f1f29;
+  --border:rgba(255,255,255,0.07);--text:#f0f0f5;--t2:#a0a0b4;--muted:#4a4a60;
+  --blue:#3b82f6;--blu2:rgba(59,130,246,0.12);
+  --grn:#22c55e;--grn2:rgba(34,197,94,0.12);
+  --org:#f97316;--org2:rgba(249,115,22,0.12);
+  --pur:#a855f7;--pur2:rgba(168,85,247,0.12);
+  --red:#ef4444;--red2:rgba(239,68,68,0.12);
+  --yel:#eab308;--yel2:rgba(234,179,8,0.12);
+  --tel:#06b6d4;--tel2:rgba(6,182,212,0.12);
+  --upper:#3b82f6;--lower:#f97316;--push:#a855f7;--pull:#22c55e;--legs:#ef4444;
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);max-width:900px;margin:0 auto;overflow-x:hidden;}
+
+/* HERO */
+.hero{padding:56px 28px 40px;position:relative;overflow:hidden;border-bottom:1px solid var(--border);}
+.hero-g1{position:absolute;top:-100px;left:-100px;width:500px;height:500px;background:radial-gradient(circle,rgba(59,130,246,.1),transparent 65%);pointer-events:none;}
+.hero-g2{position:absolute;bottom:-100px;right:-80px;width:400px;height:400px;background:radial-gradient(circle,rgba(239,68,68,.08),transparent 65%);pointer-events:none;}
+.hero-tag{display:inline-flex;align-items:center;gap:8px;padding:5px 14px;border-radius:100px;border:1px solid rgba(59,130,246,.3);background:rgba(59,130,246,.06);font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--blue);margin-bottom:20px;}
+.hero h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(50px,9vw,92px);line-height:.9;letter-spacing:2px;background:linear-gradient(150deg,#fff 30%,rgba(255,255,255,.35));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:16px;}
+.hero-sub{font-size:15px;color:var(--t2);font-weight:400;max-width:580px;line-height:1.65;margin-bottom:28px;}
+.kpi-row{display:flex;flex-wrap:wrap;gap:10px;}
+.kpi{background:var(--s1);border:1px solid var(--border);border-radius:14px;padding:14px 18px;}
+.kpi-n{font-family:'JetBrains Mono',monospace;font-size:22px;font-weight:700;line-height:1;}
+.kpi-l{font-size:10px;font-weight:600;color:var(--muted);letter-spacing:.6px;text-transform:uppercase;margin-top:4px;}
+.kpi-chg{font-size:10px;font-weight:700;margin-top:3px;}
+
+/* NAV */
+.nav{display:flex;gap:5px;padding:12px 16px;position:sticky;top:0;z-index:60;background:rgba(6,6,10,.95);border-bottom:1px solid var(--border);backdrop-filter:blur(20px);overflow-x:auto;scrollbar-width:none;}
+.nav::-webkit-scrollbar{display:none;}
+.nav-btn{flex-shrink:0;padding:7px 14px;border-radius:100px;border:1px solid var(--border);background:var(--s2);color:var(--muted);font-family:'Outfit',sans-serif;font-size:12px;font-weight:700;cursor:pointer;transition:.2s;white-space:nowrap;}
+.nav-btn:hover{color:var(--text);}
+.nav-btn.active{color:#fff;border-color:transparent;}
+.nav-btn[data-t="nutrition"].active{background:var(--grn);}
+.nav-btn[data-t="supps"].active{background:var(--tel);}
+.nav-btn[data-t="cardio"].active{background:var(--org);}
+.nav-btn[data-t="abs"].active{background:var(--yel);}
+.nav-btn[data-t="p1"].active{background:var(--blue);}
+.nav-btn[data-t="p2"].active{background:var(--pur);}
+.nav-btn[data-t="p3"].active{background:var(--red);}
+.nav-btn[data-t="log"].active{background:linear-gradient(135deg,#f97316,#ef4444);}
+
+/* TABS */
+.tab{display:none;padding:20px 18px;animation:fu .22s ease both;}
+.tab.active{display:block;}
+@keyframes fu{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+
+/* CARD */
+.card{background:var(--s1);border:1px solid var(--border);border-radius:16px;padding:18px;margin-bottom:12px;}
+.card-title{font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:1px;margin-bottom:12px;}
+
+/* SECTION HEADER */
+.sec-hd{margin-bottom:18px;}
+.sec-tag{font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:6px;}
+.sec-hd h2{font-family:'Bebas Neue',sans-serif;font-size:40px;letter-spacing:2px;line-height:1;margin-bottom:8px;}
+.sec-hd p{font-size:14px;color:var(--t2);line-height:1.65;max-width:640px;}
+
+/* PHASE BANNER */
+.phase-banner{border-radius:18px;padding:22px 26px;margin-bottom:18px;position:relative;overflow:hidden;}
+.phase-banner::after{content:attr(data-bg);position:absolute;right:-15px;top:-25px;font-family:'Bebas Neue',sans-serif;font-size:120px;opacity:.06;letter-spacing:4px;pointer-events:none;color:#fff;}
+.pb-tag{font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;opacity:.7;margin-bottom:6px;}
+.pb-title{font-family:'Bebas Neue',sans-serif;font-size:38px;letter-spacing:2px;color:#fff;margin-bottom:6px;}
+.pb-desc{font-size:13px;color:rgba(255,255,255,.65);line-height:1.65;max-width:600px;}
+.pb-meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px;}
+.pb-m{background:rgba(0,0,0,.25);border-radius:9px;padding:7px 13px;}
+.pb-mk{font-size:9px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:rgba(255,255,255,.45);margin-bottom:2px;}
+.pb-mv{font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:700;color:#fff;}
+
+/* WEEK BLOCK */
+.week-blk{background:var(--s1);border:1px solid var(--border);border-radius:16px;margin-bottom:10px;overflow:hidden;}
+.wk-hd{display:flex;justify-content:space-between;align-items:center;padding:13px 16px;cursor:pointer;user-select:none;}
+.wk-hd:hover{background:var(--s2);}
+.wk-hd-l{display:flex;align-items:center;gap:12px;}
+.wk-num{font-family:'Bebas Neue',sans-serif;font-size:28px;color:var(--muted);letter-spacing:1px;min-width:40px;}
+.wk-title{font-size:14px;font-weight:700;}
+.wk-sub{font-size:11px;color:var(--muted);margin-top:2px;}
+.wk-badge{padding:4px 11px;border-radius:100px;font-size:11px;font-weight:700;}
+.wk-chev{font-size:13px;color:var(--muted);transition:transform .2s;}
+.wk-chev.open{transform:rotate(90deg);}
+.days-wrap{display:none;padding:0 10px 10px;}
+.days-wrap.open{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:8px;}
+
+/* DAY CARD */
+.day-card{border-radius:13px;background:var(--s2);overflow:hidden;border:1px solid var(--border);transition:transform .15s;}
+.day-card:hover{transform:translateY(-2px);}
+.dc-bar{height:3px;}
+.dc-head{padding:12px 13px 8px;display:flex;justify-content:space-between;align-items:flex-start;}
+.dc-day{font-size:10px;font-weight:700;letter-spacing:1px;color:var(--muted);text-transform:uppercase;margin-bottom:3px;}
+.dc-session{font-family:'Bebas Neue',sans-serif;font-size:21px;letter-spacing:1px;}
+.dc-chip{padding:3px 8px;border-radius:6px;font-size:10px;font-weight:700;white-space:nowrap;}
+.ex-wrap{padding:0 11px 8px;display:flex;flex-direction:column;gap:4px;}
+.ex-row{display:flex;align-items:flex-start;gap:7px;padding:6px 8px;border-radius:7px;}
+.ex-row.main{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);}
+.ex-row.iso{border:1px solid rgba(255,255,255,.03);}
+.ex-row.abs{background:var(--yel2);border:1px solid rgba(234,179,8,.15);}
+.ex-row.cardio-r{background:var(--org2);border:1px solid rgba(249,115,22,.15);}
+.ex-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0;margin-top:4px;}
+.ex-nm{font-size:12px;font-weight:600;flex:1;line-height:1.3;}
+.ex-sc{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted);white-space:nowrap;padding-top:1px;}
+.divider{margin:4px 11px 3px;display:flex;align-items:center;gap:7px;}
+.divider span{font-size:9px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);}
+.divider::before,.divider::after{content:'';flex:1;height:1px;background:var(--border);}
+
+/* COLOUR HELPERS */
+.c-blue{color:var(--blue);}.c-grn{color:var(--grn);}.c-org{color:var(--org);}
+.c-pur{color:var(--pur);}.c-red{color:var(--red);}.c-yel{color:var(--yel);}.c-tel{color:var(--tel);}
+.bg-blue{background:var(--blu2);}.bg-grn{background:var(--grn2);}.bg-org{background:var(--org2);}
+.bg-pur{background:var(--pur2);}.bg-red{background:var(--red2);}.bg-yel{background:var(--yel2);}
+
+/* MACRO */
+.day-toggle{display:flex;background:var(--s2);border-radius:11px;padding:3px;margin-bottom:16px;width:fit-content;}
+.dtb{padding:7px 16px;border-radius:8px;font-family:'Outfit',sans-serif;font-size:13px;font-weight:700;cursor:pointer;border:none;background:none;color:var(--muted);transition:.15s;}
+.dtb.active{background:var(--grn);color:#fff;}
+.mac-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:8px;margin-bottom:14px;}
+.mac-card{background:var(--s2);border-radius:13px;padding:14px;border:1px solid var(--border);}
+.mac-nm{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:var(--muted);margin-bottom:7px;}
+.mac-val{font-family:'Bebas Neue',sans-serif;font-size:34px;letter-spacing:1px;line-height:1;}
+.mac-unit{font-size:12px;color:var(--muted);font-weight:500;}
+.mac-bar{height:4px;background:var(--s3);border-radius:2px;margin-top:9px;overflow:hidden;}
+.mac-fill{height:100%;border-radius:2px;}
+.meal-tbl{width:100%;border-collapse:collapse;}
+.meal-tbl th{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--muted);padding:7px 11px;text-align:left;border-bottom:1px solid var(--border);}
+.meal-tbl td{font-size:13px;padding:10px 11px;border-bottom:1px solid rgba(255,255,255,.04);vertical-align:top;}
+.meal-tbl tr:last-child td{border-bottom:none;}
+.meal-tbl tr:hover td{background:var(--s2);}
+.meal-time{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);white-space:nowrap;}
+.meal-name{font-weight:600;}
+.meal-foods{font-size:11px;color:var(--t2);margin-top:3px;line-height:1.5;}
+.meal-kcal{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--grn);text-align:right;white-space:nowrap;}
+.meal-p{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--blue);text-align:right;}
+.water-card{display:flex;align-items:center;gap:18px;background:var(--tel2);border:1px solid rgba(6,182,212,.2);border-radius:13px;padding:15px 18px;margin-top:12px;}
+
+/* SUPPLEMENT */
+.supp-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:9px;}
+.supp-card{background:var(--s2);border-radius:13px;padding:15px;border:1px solid var(--border);}
+.supp-top{display:flex;align-items:center;gap:11px;margin-bottom:11px;}
+.supp-ic{width:38px;height:38px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:19px;flex-shrink:0;}
+.supp-name{font-size:14px;font-weight:800;}
+.supp-dose{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);margin-top:2px;}
+.timing-pill{display:inline-block;padding:2px 7px;border-radius:100px;font-size:10px;font-weight:700;margin-right:3px;margin-bottom:4px;}
+.supp-why{font-size:12px;color:var(--muted);margin-top:9px;padding-top:9px;border-top:1px solid var(--border);line-height:1.5;}
+
+/* CARDIO TABLE */
+.cardio-blk{background:var(--s1);border:1px solid var(--border);border-radius:16px;margin-bottom:10px;overflow:hidden;}
+.cardio-hd{display:flex;justify-content:space-between;align-items:center;padding:13px 16px;cursor:pointer;}
+.cardio-hd:hover{background:var(--s2);}
+.cardio-body{display:none;border-top:1px solid var(--border);}
+.cardio-body.open{display:block;}
+.c-tbl{width:100%;border-collapse:collapse;}
+.c-tbl th{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--muted);padding:9px 14px;text-align:left;border-bottom:1px solid var(--border);}
+.c-tbl td{font-size:13px;padding:10px 14px;border-bottom:1px solid rgba(255,255,255,.04);vertical-align:middle;}
+.c-tbl tr:last-child td{border-bottom:none;}
+.d-badge{padding:3px 9px;border-radius:6px;font-size:11px;font-weight:700;display:inline-block;}
+.int-low{background:var(--grn2);color:var(--grn);}
+.int-mod{background:var(--org2);color:var(--org);}
+.int-high{background:var(--red2);color:var(--red);}
+.int-rest{background:var(--s3);color:var(--muted);}
+.c-tip{background:var(--org2);border:1px solid rgba(249,115,22,.2);border-radius:11px;padding:12px 14px;margin:11px 14px;font-size:13px;color:var(--t2);line-height:1.6;}
+.c-tip strong{color:var(--org);}
+
+/* ABS */
+.abs-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:9px;}
+.abs-card{background:var(--s2);border-radius:13px;padding:14px;border:1px solid var(--border);}
+.abs-nm{font-size:14px;font-weight:800;margin-bottom:4px;}
+.abs-cat{display:inline-block;padding:2px 8px;border-radius:6px;font-size:10px;font-weight:700;margin-bottom:7px;}
+.abs-detail{font-size:12px;color:var(--t2);line-height:1.6;}
+.abs-sets{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--yel);margin-top:6px;font-weight:700;}
+.abs-sch{background:var(--s1);border:1px solid var(--border);border-radius:16px;overflow:hidden;margin-bottom:13px;}
+.abs-sch-row{display:flex;align-items:flex-start;gap:14px;padding:12px 15px;border-bottom:1px solid var(--border);}
+.abs-sch-row:last-child{border-bottom:none;}
+.abs-day-b{width:42px;flex-shrink:0;padding:4px 0;border-radius:7px;font-size:11px;font-weight:800;text-align:center;}
+.abs-exs{flex:1;font-size:13px;font-weight:700;}
+.abs-sub{font-size:11px;color:var(--t2);margin-top:4px;line-height:1.5;}
+
+/* NOTES */
+.note-blk{background:var(--s1);border:1px solid var(--border);border-radius:16px;overflow:hidden;margin-top:14px;}
+.note-row{display:flex;gap:13px;padding:12px 15px;border-bottom:1px solid var(--border);}
+.note-row:last-child{border-bottom:none;}
+.note-num{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);flex-shrink:0;padding-top:1px;}
+.note-tx{font-size:13px;color:var(--t2);line-height:1.6;}
+
+/* PROGRESS */
+.trk-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:9px;margin-bottom:13px;}
+.trk-card{background:var(--s2);border-radius:13px;padding:15px;border:1px solid var(--border);}
+.trk-lbl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--muted);margin-bottom:7px;}
+.trk-now{font-family:'JetBrains Mono',monospace;font-size:22px;font-weight:700;}
+.trk-goal{font-size:11px;color:var(--muted);margin-top:4px;line-height:1.6;}
+.prog-bar{height:5px;background:var(--s3);border-radius:3px;margin-top:9px;overflow:hidden;}
+.prog-fill{height:100%;border-radius:3px;}
+
+/* DAILY LOG STYLES */
+.log-date-nav{display:flex;align-items:center;justify-content:space-between;background:var(--s1);border:1px solid var(--border);border-radius:13px;padding:12px 16px;margin-bottom:14px;}
+.log-date-arrow{width:36px;height:36px;border-radius:50%;background:var(--s2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:18px;color:var(--t2);}
+.log-date-arrow:active{background:var(--s3);}
+.log-date-label{text-align:center;}
+.log-date-big{font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:1px;}
+.log-date-sub{font-size:11px;color:var(--muted);}
+.today-pill{display:inline-block;padding:2px 9px;border-radius:100px;background:var(--blu2);color:var(--blue);font-size:10px;font-weight:700;margin-top:3px;}
+
+.log-session{border-radius:14px;padding:14px 16px;margin-bottom:14px;display:flex;justify-content:space-between;align-items:center;}
+.log-session h3{font-family:'Bebas Neue',sans-serif;font-size:24px;letter-spacing:1px;color:#fff;}
+.log-session p{font-size:12px;color:rgba(255,255,255,.6);margin-top:2px;}
+.log-session-ic{font-size:36px;}
+
+.log-section{margin-bottom:14px;}
+.log-sec-title{font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:1px;margin-bottom:8px;}
+
+.habit-list{display:flex;flex-direction:column;gap:7px;}
+.habit-item{background:var(--s1);border:1px solid var(--border);border-radius:13px;padding:13px 15px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;transition:.15s;}
+.habit-item:active{background:var(--s2);}
+.habit-item.done{border-color:var(--grn);background:rgba(34,197,94,.06);}
+.habit-left{display:flex;align-items:center;gap:11px;}
+.habit-ic{font-size:21px;width:30px;text-align:center;}
+.habit-nm{font-size:13px;font-weight:700;}
+.habit-det{font-size:11px;color:var(--muted);margin-top:2px;}
+.habit-check{width:27px;height:27px;border-radius:50%;border:2px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:13px;transition:.15s;flex-shrink:0;}
+.habit-item.done .habit-check{background:var(--grn);border-color:var(--grn);color:#fff;}
+
+.habit-counter{background:var(--s1);border:1px solid var(--border);border-radius:13px;padding:13px 15px;}
+.hc-row{display:flex;align-items:center;justify-content:space-between;}
+.hc-left{display:flex;align-items:center;gap:11px;}
+.hc-btns{display:flex;align-items:center;gap:11px;}
+.ctr-btn{width:34px;height:34px;border-radius:50%;border:none;font-size:18px;font-weight:800;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:transform .12s;}
+.ctr-btn:active{transform:scale(.88);}
+.ctr-m{background:var(--red2);color:var(--red);}
+.ctr-p{background:var(--grn2);color:var(--grn);}
+.ctr-val{font-family:'Bebas Neue',sans-serif;font-size:26px;min-width:30px;text-align:center;}
+.water-dots{display:flex;gap:4px;flex-wrap:wrap;margin-top:9px;}
+.wdot{width:30px;height:30px;border-radius:50%;border:2px solid var(--tel);display:flex;align-items:center;justify-content:center;font-size:13px;cursor:pointer;transition:.15s;}
+.wdot.fill{background:var(--tel);}
+.wdot:active{transform:scale(.9);}
+.sleep-row{display:flex;align-items:center;gap:9px;margin-top:9px;}
+.num-in{background:var(--s2);border:1px solid var(--border);border-radius:9px;padding:9px 12px;font-family:'JetBrains Mono',monospace;font-size:16px;font-weight:700;color:var(--text);width:80px;text-align:center;outline:none;}
+.num-in:focus{border-color:var(--blue);}
+
+.cardio-form-card{background:var(--s1);border:1px solid var(--border);border-radius:13px;padding:14px;}
+.form-row{display:flex;gap:9px;margin-bottom:9px;}
+.form-row:last-child{margin-bottom:0;}
+.form-group{flex:1;}
+.form-lbl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--muted);margin-bottom:4px;display:block;}
+.form-sel,.form-in{background:var(--s2);border:1px solid var(--border);border-radius:9px;padding:9px 11px;font-family:'Outfit',sans-serif;font-size:13px;font-weight:600;color:var(--text);outline:none;width:100%;-webkit-appearance:none;}
+.form-sel:focus,.form-in:focus{border-color:var(--org);}
+.add-cardio-btn{width:100%;padding:10px;background:var(--org);color:#fff;border:none;border-radius:10px;font-family:'Bebas Neue',sans-serif;font-size:16px;letter-spacing:1px;cursor:pointer;margin-top:2px;}
+.cardio-done{display:flex;flex-direction:column;gap:5px;margin-top:9px;}
+.cardio-done-item{background:var(--s2);border-radius:9px;padding:9px 13px;display:flex;justify-content:space-between;align-items:center;}
+.cdi-nm{font-size:13px;font-weight:700;}
+.cdi-sub{font-size:11px;color:var(--muted);margin-top:1px;}
+.cdi-del{background:var(--red2);color:var(--red);border:none;border-radius:6px;padding:4px 7px;font-size:12px;font-weight:700;cursor:pointer;font-family:'Outfit',sans-serif;}
+
+.ex-log-card{background:var(--s1);border:1px solid var(--border);border-radius:13px;overflow:hidden;margin-bottom:7px;}
+.ex-log-hd{display:flex;align-items:center;justify-content:space-between;padding:12px 14px;cursor:pointer;}
+.ex-log-nm{font-size:13px;font-weight:700;}
+.ex-log-meta{font-size:11px;color:var(--muted);margin-top:2px;}
+.ex-log-chev{font-size:13px;color:var(--muted);transition:transform .2s;}
+.ex-log-chev.open{transform:rotate(90deg);}
+.ex-log-body{display:none;border-top:1px solid var(--border);padding:11px 14px;}
+.ex-log-body.open{display:block;}
+.sets-hd{display:grid;grid-template-columns:24px 1fr 1fr 70px;gap:7px;padding-bottom:7px;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--muted);}
+.set-row{display:grid;grid-template-columns:24px 1fr 1fr 70px;gap:7px;align-items:center;padding:4px 0;border-bottom:1px solid rgba(255,255,255,.04);}
+.set-row:last-of-type{border-bottom:none;}
+.set-n{font-size:11px;font-weight:700;color:var(--muted);text-align:center;}
+.set-inp{background:var(--s2);border:none;border-radius:7px;padding:7px 4px;font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:600;text-align:center;width:100%;color:var(--text);outline:none;}
+.set-inp:focus{background:var(--blu2);color:var(--blue);}
+.set-feel{display:flex;gap:3px;}
+.feel-btn{width:21px;height:21px;border-radius:4px;border:none;cursor:pointer;font-size:11px;display:flex;align-items:center;justify-content:center;background:var(--s3);transition:.15s;}
+.feel-btn.fe{background:var(--grn2);}.feel-btn.fp{background:var(--blu2);}.feel-btn.fh{background:var(--red2);}
+.add-set-btn{width:100%;margin-top:7px;padding:7px;background:var(--s2);border:1.5px dashed var(--border);border-radius:8px;font-family:'Outfit',sans-serif;font-size:11px;font-weight:700;color:var(--blue);cursor:pointer;}
+.ex-notes-in{width:100%;background:var(--s2);border:1px solid var(--border);border-radius:7px;padding:7px 9px;font-family:'Outfit',sans-serif;font-size:12px;color:var(--t2);resize:none;outline:none;margin-top:7px;min-height:38px;}
+.pr-badge{display:inline-block;padding:2px 6px;border-radius:100px;background:var(--yel2);color:var(--yel);font-size:10px;font-weight:700;margin-left:5px;animation:pulse 1.2s ease infinite;}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.5}}
+
+.mac-sum{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;margin-bottom:11px;}
+.mac-pill{background:var(--s1);border:1px solid var(--border);border-radius:11px;padding:11px 7px;text-align:center;}
+.mac-pn{font-family:'JetBrains Mono',monospace;font-size:17px;font-weight:700;}
+.mac-pl{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);margin-top:2px;}
+.mac-pb{height:3px;background:var(--s3);border-radius:2px;margin-top:5px;overflow:hidden;}
+.mac-pbf{height:100%;border-radius:2px;}
+.meal-log-card{background:var(--s1);border:1px solid var(--border);border-radius:12px;overflow:hidden;margin-bottom:6px;}
+.meal-log-hd{display:flex;align-items:center;justify-content:space-between;padding:11px 13px;cursor:pointer;}
+.meal-log-nm{font-size:13px;font-weight:700;}
+.meal-log-kcal{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--grn);}
+.meal-log-body{display:none;border-top:1px solid var(--border);padding:10px 13px;}
+.meal-log-body.open{display:block;}
+.food-log-row{display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid rgba(255,255,255,.04);}
+.food-log-row:last-of-type{border-bottom:none;}
+.fln{font-size:12px;font-weight:600;}
+.flm{font-size:10px;color:var(--muted);}
+.fl-kcal{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--grn);}
+.fl-del{background:none;border:none;color:var(--muted);cursor:pointer;font-size:13px;padding:0 4px;}
+.add-food-btn{width:100%;margin-top:7px;padding:7px;background:var(--s2);border:1.5px dashed var(--border);border-radius:8px;font-family:'Outfit',sans-serif;font-size:12px;font-weight:700;color:var(--grn);cursor:pointer;}
+
+.bw-row{display:flex;align-items:center;gap:11px;margin-top:9px;}
+.bw-prev{font-size:11px;color:var(--muted);margin-top:5px;}
+.notes-ta{width:100%;background:var(--s2);border:1px solid var(--border);border-radius:10px;padding:10px 12px;font-family:'Outfit',sans-serif;font-size:13px;color:var(--text);resize:none;outline:none;min-height:75px;margin-top:8px;}
+.notes-ta:focus{border-color:var(--muted);}
+
+.save-log-btn{width:100%;padding:15px;background:var(--blue);color:#fff;border:none;border-radius:13px;font-family:'Bebas Neue',sans-serif;font-size:19px;letter-spacing:1.5px;cursor:pointer;margin-top:14px;transition:.2s;}
+.save-log-btn:active{transform:scale(.98);}
+.save-log-btn.saved{background:var(--grn);}
+
+.hist-item{background:var(--s1);border:1px solid var(--border);border-radius:13px;padding:13px 15px;margin-bottom:8px;cursor:pointer;transition:.15s;}
+.hist-item:hover{background:var(--s2);}
+.hist-date{font-family:'Bebas Neue',sans-serif;font-size:17px;letter-spacing:1px;}
+.hist-sum{font-size:11px;color:var(--muted);margin-top:5px;line-height:1.6;}
+.hist-note{font-size:11px;color:var(--muted);margin-top:5px;font-style:italic;}
+
+/* MODAL */
+.modal-ov{display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:200;align-items:flex-end;backdrop-filter:blur(6px);}
+.modal-ov.open{display:flex;animation:fadeIn .2s ease;}
+.modal{background:var(--s1);border-radius:22px 22px 0 0;padding:20px 16px calc(env(safe-area-inset-bottom,20px) + 18px);width:100%;max-height:85vh;overflow-y:auto;}
+.modal-handle{width:34px;height:4px;background:var(--s3);border-radius:2px;margin:0 auto 16px;}
+.modal h2{font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:1px;margin-bottom:13px;}
+.m-in{width:100%;background:var(--s2);border:1px solid var(--border);border-radius:9px;padding:10px 13px;font-family:'Outfit',sans-serif;font-size:14px;font-weight:500;color:var(--text);margin-bottom:8px;outline:none;}
+.m-in:focus{border-color:var(--blue);}
+.m-lbl{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--muted);margin-bottom:4px;display:block;}
+.m-grid2{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-bottom:8px;}
+.m-btn{width:100%;padding:12px;border-radius:11px;border:none;font-family:'Bebas Neue',sans-serif;font-size:17px;letter-spacing:1px;cursor:pointer;margin-bottom:7px;transition:.15s;}
+.m-btn:active{transform:scale(.98);}
+.m-primary{background:var(--blue);color:#fff;}
+.m-cancel{background:var(--s2);color:var(--muted);}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+
+@media(max-width:600px){
+  .days-wrap.open{grid-template-columns:1fr;}
+  .mac-grid{grid-template-columns:1fr 1fr;}
+  .supp-grid{grid-template-columns:1fr;}
+  .hero h1{font-size:52px;}
+}
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-g1"></div><div class="hero-g2"></div>
+  <div class="hero-tag">⚡ 90-Day Elite Recomp · Intermediate–Advanced</div>
+  <h1>12-WEEK<br>RECOMP<br>PROTOCOL</h1>
+  <div class="hero-sub">Built from your April 4, 2026 InBody scan. Priority: rebuild muscle, cut body fat to 14–15%, fix under-developed legs. Includes full nutrition, supplements, cardio, abs & daily log.</div>
+  <div class="kpi-row">
+    <div class="kpi"><div class="kpi-n c-red">21.1<span style="font-size:13px;color:var(--muted)">%</span></div><div class="kpi-l">Body Fat Now</div><div class="kpi-chg" style="color:var(--org)">→ 14–15% target</div></div>
+    <div class="kpi"><div class="kpi-n c-blue">29.2<span style="font-size:13px;color:var(--muted)"> kg</span></div><div class="kpi-l">Muscle Now</div><div class="kpi-chg" style="color:var(--grn)">→ 32.5–33 kg</div></div>
+    <div class="kpi"><div class="kpi-n c-yel">77<span style="font-size:13px;color:var(--muted)"> pts</span></div><div class="kpi-l">InBody Score</div><div class="kpi-chg" style="color:var(--grn)">→ 85+ target</div></div>
+    <div class="kpi"><div class="kpi-n c-org">65.5<span style="font-size:13px;color:var(--muted)"> kg</span></div><div class="kpi-l">Weight Now</div><div class="kpi-chg" style="color:var(--t2)">→ 63–65 kg</div></div>
+  </div>
+</div>
+
+<!-- NAV -->
+<div class="nav">
+  <button class="nav-btn active" data-t="nutrition" onclick="switchTab('nutrition',this)">🥗 Nutrition</button>
+  <button class="nav-btn" data-t="supps" onclick="switchTab('supps',this)">💊 Supplements</button>
+  <button class="nav-btn" data-t="cardio" onclick="switchTab('cardio',this)">🏃 Cardio</button>
+  <button class="nav-btn" data-t="abs" onclick="switchTab('abs',this)">🔥 Abs</button>
+  <button class="nav-btn" data-t="p1" onclick="switchTab('p1',this)">Phase 1 W1–4</button>
+  <button class="nav-btn" data-t="p2" onclick="switchTab('p2',this)">Phase 2 W5–8</button>
+  <button class="nav-btn" data-t="p3" onclick="switchTab('p3',this)">Phase 3 W9–12</button>
+  <button class="nav-btn" data-t="log" onclick="switchTab('log',this)">📝 Daily Log</button>
+</div>
+
+<!-- ══ NUTRITION TAB ══ -->
+<div class="tab active" id="tab-nutrition">
+  <div class="sec-hd"><div class="sec-tag c-grn">Nutrition System</div><h2 class="c-grn">DAILY MACROS</h2><p>Strict recomp — calories at maintenance. Protein never negotiable at 175g+ daily. Carbs cycle between training and rest days. Built around your night-shift schedule and South Indian food preferences.</p></div>
+  <div class="day-toggle">
+    <button class="dtb active" onclick="setMacroDay('train',this)">Training Day</button>
+    <button class="dtb" onclick="setMacroDay('rest',this)">Rest Day</button>
+  </div>
+  <div id="macro-train">
+    <div class="mac-grid">
+      <div class="mac-card"><div class="mac-nm">Calories</div><div class="mac-val c-blue">2380<span class="mac-unit"> kcal</span></div><div class="mac-bar"><div class="mac-fill" style="width:100%;background:var(--blue)"></div></div></div>
+      <div class="mac-card"><div class="mac-nm">Protein</div><div class="mac-val c-grn">175<span class="mac-unit"> g</span></div><div class="mac-bar"><div class="mac-fill" style="width:100%;background:var(--grn)"></div></div></div>
+      <div class="mac-card"><div class="mac-nm">Carbs</div><div class="mac-val c-org">245<span class="mac-unit"> g</span></div><div class="mac-bar"><div class="mac-fill" style="width:90%;background:var(--org)"></div></div></div>
+      <div class="mac-card"><div class="mac-nm">Fats</div><div class="mac-val c-pur">62<span class="mac-unit"> g</span></div><div class="mac-bar"><div class="mac-fill" style="width:65%;background:var(--pur)"></div></div></div>
+      <div class="mac-card"><div class="mac-nm">Water</div><div class="mac-val c-tel">3.5<span class="mac-unit"> L</span></div><div class="mac-bar"><div class="mac-fill" style="width:80%;background:var(--tel)"></div></div></div>
+    </div>
+    <div class="card">
+      <div class="card-title c-grn">Training Day Meal Plan</div>
+      <table class="meal-tbl">
+        <tr><th>Time</th><th>Meal</th><th style="text-align:right">Kcal</th><th style="text-align:right">Protein</th></tr>
+        <tr><td><div class="meal-time">11:00 AM</div></td><td><div class="meal-name">Breakfast — Wake Up</div><div class="meal-foods">Overnight oats 140g + berries/dry fruits · 2 whole eggs + 1 egg white · Plant protein 1 scoop (25g protein) · Black coffee / green tea</div></td><td class="meal-kcal">480</td><td class="meal-p">43g</td></tr>
+        <tr><td><div class="meal-time">2:30 PM</div><div class="meal-time">Pre-gym</div></td><td><div class="meal-name">Lunch — Power Meal</div><div class="meal-foods">White rice 150g cooked or 2 chapati · Air-fried chicken breast 170g · Dal 1 cup · Vegetable salad · 1 tsp ghee</div></td><td class="meal-kcal">680</td><td class="meal-p">52g</td></tr>
+        <tr><td><div class="meal-time">3:00 PM</div><div class="meal-time">GYM</div></td><td><div class="meal-name">During Gym</div><div class="meal-foods">500ml+ water · Optional banana or 4–5 dates if energy is low</div></td><td class="meal-kcal">80</td><td class="meal-p">1g</td></tr>
+        <tr><td><div class="meal-time">5:30 PM</div><div class="meal-time">Post-gym</div></td><td><div class="meal-name">Recovery Shake ⚡</div><div class="meal-foods">Plant protein 2 scoops (50g protein) · 250ml water or oat milk · 1 banana · Creatine 4g mixed in</div></td><td class="meal-kcal">380</td><td class="meal-p">52g</td></tr>
+        <tr><td><div class="meal-time">9:00 PM</div></td><td><div class="meal-name">Office Dinner</div><div class="meal-foods">Chicken curry 170g · Rice 1 cup or 2 rotis · Vegetable subzi · Dal · Small salad · Skip sugary drinks</div></td><td class="meal-kcal">620</td><td class="meal-p">44g</td></tr>
+        <tr><td><div class="meal-time">12:30 AM</div></td><td><div class="meal-name">Late Night — Slow Protein</div><div class="meal-foods">Greek yogurt or curd 200g · 10–12 almonds · 1 fruit (apple or banana)</div></td><td class="meal-kcal">250</td><td class="meal-p">16g</td></tr>
+        <tr style="font-weight:700;background:rgba(34,197,94,.06)"><td colspan="2" style="font-size:13px;font-weight:800;color:var(--grn)">TOTAL</td><td class="meal-kcal" style="font-size:15px">2490</td><td class="meal-p" style="font-size:14px">208g ✓</td></tr>
+      </table>
+    </div>
+  </div>
+  <div id="macro-rest" style="display:none">
+    <div class="mac-grid">
+      <div class="mac-card"><div class="mac-nm">Calories</div><div class="mac-val c-blue">2050<span class="mac-unit"> kcal</span></div><div class="mac-bar"><div class="mac-fill" style="width:86%;background:var(--blue)"></div></div></div>
+      <div class="mac-card"><div class="mac-nm">Protein</div><div class="mac-val c-grn">175<span class="mac-unit"> g</span></div><div class="mac-bar"><div class="mac-fill" style="width:100%;background:var(--grn)"></div></div></div>
+      <div class="mac-card"><div class="mac-nm">Carbs</div><div class="mac-val c-org">175<span class="mac-unit"> g</span></div><div class="mac-bar"><div class="mac-fill" style="width:71%;background:var(--org)"></div></div></div>
+      <div class="mac-card"><div class="mac-nm">Fats</div><div class="mac-val c-pur">58<span class="mac-unit"> g</span></div><div class="mac-bar"><div class="mac-fill" style="width:60%;background:var(--pur)"></div></div></div>
+      <div class="mac-card"><div class="mac-nm">Water</div><div class="mac-val c-tel">3<span class="mac-unit"> L</span></div><div class="mac-bar"><div class="mac-fill" style="width:65%;background:var(--tel)"></div></div></div>
+    </div>
+    <div class="card">
+      <div class="card-title c-grn">Rest Day — Cut carbs, keep protein</div>
+      <table class="meal-tbl">
+        <tr><th>Time</th><th>Meal</th><th style="text-align:right">Kcal</th><th style="text-align:right">Protein</th></tr>
+        <tr><td><div class="meal-time">11:00 AM</div></td><td><div class="meal-name">Breakfast</div><div class="meal-foods">3 egg omelette (2 whole + 1 white) · Plant protein 1 scoop · Peanut butter toast 1 slice · Coffee</div></td><td class="meal-kcal">430</td><td class="meal-p">42g</td></tr>
+        <tr><td><div class="meal-time">2:00 PM</div></td><td><div class="meal-name">Lunch — Lower carb</div><div class="meal-foods">Grilled chicken 170g · Dal 1 cup · Large salad · 1 roti only — skip rice · Veggies</div></td><td class="meal-kcal">510</td><td class="meal-p">50g</td></tr>
+        <tr><td><div class="meal-time">5:00 PM</div></td><td><div class="meal-name">Evening Snack</div><div class="meal-foods">Plant protein 1 scoop · 100g paneer · Greek yogurt 100g</div></td><td class="meal-kcal">320</td><td class="meal-p">46g</td></tr>
+        <tr><td><div class="meal-time">9:00 PM</div></td><td><div class="meal-name">Dinner — Light</div><div class="meal-foods">Chicken or paneer sabzi · Dal · Salad · 1 roti max — no rice tonight</div></td><td class="meal-kcal">490</td><td class="meal-p">38g</td></tr>
+        <tr><td><div class="meal-time">12:30 AM</div></td><td><div class="meal-name">Late Night</div><div class="meal-foods">Greek yogurt 200g · 10 almonds — skip fruit on rest days</div></td><td class="meal-kcal">190</td><td class="meal-p">14g</td></tr>
+        <tr style="font-weight:700;background:rgba(34,197,94,.06)"><td colspan="2" style="font-size:13px;font-weight:800;color:var(--grn)">TOTAL</td><td class="meal-kcal" style="font-size:15px">1940</td><td class="meal-p" style="font-size:14px">190g ✓</td></tr>
+      </table>
+    </div>
+  </div>
+  <div class="water-card">
+    <div style="font-size:34px">💧</div>
+    <div><div style="font-size:17px;font-weight:800;color:var(--tel)">3–3.5 Litres Daily — Non-negotiable</div><div style="font-size:13px;color:var(--t2);margin-top:4px">Night shift + creatine + training = elevated needs. 500ml on waking. 500ml during gym. Aim for pale yellow urine. Add electrolytes on heavy leg days.</div></div>
+  </div>
+  <div class="card" style="margin-top:12px">
+    <div class="card-title">🔑 Key Rules</div>
+    <div class="note-blk" style="margin-top:0">
+      <div class="note-row"><span class="note-num">01</span><span class="note-tx"><strong>Protein first, every meal.</strong> Plant protein 2 scoops post-gym = 50g protein in one hit — use this. Never let a meal go by without a protein source hitting 30g+.</span></div>
+      <div class="note-row"><span class="note-num">02</span><span class="note-tx"><strong>Carbs around training.</strong> Pre-gym meal = higher carbs (rice/chapati). Post-gym = banana + shake. Late night = low carb (yogurt, nuts). Rest days = cut rice, keep dal and protein.</span></div>
+      <div class="note-row"><span class="note-num">03</span><span class="note-tx"><strong>Night shift hack.</strong> Biggest carb meal at 2:30 PM before gym. 9 PM dinner moderate. Avoid heavy carbs after midnight — insulin sensitivity drops on night shift.</span></div>
+      <div class="note-row"><span class="note-num">04</span><span class="note-tx"><strong>South Indian foods that fit perfectly.</strong> Rasam (probiotic), curd rice, dal tadka, paneer, ragi roti (high fibre), idli (light, easily digestible pre-gym), sambar (protein from dal).</span></div>
+      <div class="note-row"><span class="note-num">05</span><span class="note-tx"><strong>Avoid.</strong> Swiggy/Zomato fried items, sugary drinks, random office snacking, skipping protein. One cheat meal per week is fine — not a cheat day.</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ SUPPLEMENTS TAB ══ -->
+<div class="tab" id="tab-supps">
+  <div class="sec-hd"><div class="sec-tag c-tel">Stack</div><h2 class="c-tel">SUPPLEMENTS</h2><p>Your full stack optimised for timing. Ashwagandha, creatine, plant protein, multivitamin, calcium, magnesium — all timed for maximum absorption alongside your night-shift schedule.</p></div>
+  <div class="supp-grid">
+    <div class="supp-card">
+      <div class="supp-top"><div class="supp-ic" style="background:var(--grn2)">🌿</div><div><div class="supp-name">Ashwagandha (KSM-66)</div><div class="supp-dose">As prescribed · typically 300–600mg</div></div></div>
+      <div><span class="timing-pill" style="background:var(--pur2);color:var(--pur)">Before bed</span><span class="timing-pill" style="background:var(--s3);color:var(--muted)">or with dinner</span></div>
+      <div class="supp-why">Adaptogen — reduces cortisol, improves recovery, boosts testosterone naturally. Critical for night shift workers whose cortisol is chronically elevated. Take at night for best effect. Known to improve sleep quality and reduce gym recovery time.</div>
+    </div>
+    <div class="supp-card">
+      <div class="supp-top"><div class="supp-ic" style="background:var(--blu2)">⚡</div><div><div class="supp-name">Creatine Monohydrate</div><div class="supp-dose">4g daily — every single day</div></div></div>
+      <div><span class="timing-pill" style="background:var(--blu2);color:var(--blue)">Post-gym shake</span><span class="timing-pill" style="background:var(--s3);color:var(--muted)">With breakfast (rest days)</span></div>
+      <div class="supp-why">At 4g/day you are perfectly dosed. Mix into your post-gym plant protein shake. On rest days take with breakfast. Consistency matters more than timing. Improves strength output by 5–15% and helps with muscle volumisation. No loading needed.</div>
+    </div>
+    <div class="supp-card">
+      <div class="supp-top"><div class="supp-ic" style="background:var(--grn2)">🌱</div><div><div class="supp-name">Plant Protein</div><div class="supp-dose">2 scoops · 50g protein daily</div></div></div>
+      <div><span class="timing-pill" style="background:var(--grn2);color:var(--grn)">Post-gym — primary dose</span><span class="timing-pill" style="background:var(--s3);color:var(--muted)">Optional 1 scoop breakfast</span></div>
+      <div class="supp-why">2 scoops post-gym = 50g protein in one hit — this is your most important supplement window. Ensure your plant protein has a complete amino acid profile (pea + rice blend is best). If leucine content is low, consider adding 2–3g leucine separately to maximise muscle protein synthesis.</div>
+    </div>
+    <div class="supp-card">
+      <div class="supp-top"><div class="supp-ic" style="background:var(--yel2)">🌟</div><div><div class="supp-name">Multivitamin</div><div class="supp-dose">1 tablet daily</div></div></div>
+      <div><span class="timing-pill" style="background:var(--yel2);color:var(--yel)">With breakfast (11 AM)</span></div>
+      <div class="supp-why">Take with food for fat-soluble vitamin absorption (A, D, E, K). Night shift workers are almost universally deficient in Vitamin D — check if your multi has 1000+ IU D3. If not, add a separate D3 supplement (2000 IU daily). This alone will improve mood, testosterone, and recovery.</div>
+    </div>
+    <div class="supp-card">
+      <div class="supp-top"><div class="supp-ic" style="background:var(--org2)">🦴</div><div><div class="supp-name">Calcium</div><div class="supp-dose">As prescribed · 500–1000mg</div></div></div>
+      <div><span class="timing-pill" style="background:var(--org2);color:var(--org)">With lunch or dinner</span><span class="timing-pill" style="background:var(--red2);color:var(--red)">NOT with iron foods</span></div>
+      <div class="supp-why">Critical for muscle contraction and bone density under heavy training load. Do NOT take with iron-rich foods — they compete for absorption. Space 2 hours from multivitamin if it contains iron. If on 1000mg, split into two 500mg doses for better absorption.</div>
+    </div>
+    <div class="supp-card">
+      <div class="supp-top"><div class="supp-ic" style="background:var(--pur2)">🌙</div><div><div class="supp-name">Magnesium</div><div class="supp-dose">As prescribed · 200–400mg</div></div></div>
+      <div><span class="timing-pill" style="background:var(--pur2);color:var(--pur)">Always before bed</span></div>
+      <div class="supp-why">Your single most impactful supplement for a night-shift athlete. Improves sleep depth, reduces muscle cramps, lowers cortisol, aids recovery. Magnesium glycinate or citrate absorbs best. Take 30–60 minutes before sleep. You should notice better sleep quality within 1–2 weeks.</div>
+    </div>
+    <div class="supp-card" style="border:1px solid rgba(6,182,212,.2);background:var(--tel2)">
+      <div class="supp-top"><div class="supp-ic" style="background:rgba(6,182,212,.15)">📅</div><div><div class="supp-name c-tel">Daily Timing Protocol</div><div class="supp-dose">Optimised for your schedule</div></div></div>
+      <div style="font-size:12px;color:var(--t2);line-height:1.7;margin-top:4px">
+        <strong style="color:var(--grn)">11 AM (Breakfast):</strong> Multivitamin · Plant protein 1 scoop (if needed)<br>
+        <strong style="color:var(--org)">2:30 PM (Lunch):</strong> Calcium tablet<br>
+        <strong style="color:var(--blue)">5:30 PM (Post-gym):</strong> Plant protein 2 scoops + Creatine 4g<br>
+        <strong style="color:var(--grn)">9 PM (Dinner):</strong> Ashwagandha (or with magnesium at bed)<br>
+        <strong style="color:var(--pur)">12:30 AM (Before sleep):</strong> Magnesium · Ashwagandha (if not with dinner)
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ CARDIO TAB ══ -->
+<div class="tab" id="tab-cardio">
+  <div class="sec-hd"><div class="sec-tag c-org">Cardiovascular</div><h2 class="c-org">CARDIO PLAN</h2><p>Programmed to maximise fat loss without eating muscle. Phases escalate gradually. LISS protects muscle. HIIT accelerates fat loss. Treadmill, bike, jump rope, and elliptical rotated to prevent adaptation. Never cardio after legs day.</p></div>
+  <div class="card" style="border:1px solid var(--org2)">
+    <div class="card-title c-org">Golden Rules</div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:9px">
+      <div style="background:var(--s2);border-radius:11px;padding:13px;border:1px solid var(--border)"><div style="font-size:18px;margin-bottom:5px">🫀</div><div style="font-size:12px;font-weight:700;margin-bottom:3px">LISS Heart Rate</div><div style="font-size:11px;color:var(--t2)">120–140 BPM. Fat-burning zone. Can hold a conversation. Preserves muscle while burning fat.</div></div>
+      <div style="background:var(--s2);border-radius:11px;padding:13px;border:1px solid var(--border)"><div style="font-size:18px;margin-bottom:5px">⚡</div><div style="font-size:12px;font-weight:700;margin-bottom:3px">HIIT Structure</div><div style="font-size:11px;color:var(--t2)">20–30s all-out : 40–60s rest. 15–20 mins total only. Never on leg day or the day after.</div></div>
+      <div style="background:var(--s2);border-radius:11px;padding:13px;border:1px solid var(--border)"><div style="font-size:18px;margin-bottom:5px">🍌</div><div style="font-size:12px;font-weight:700;margin-bottom:3px">Pre-Cardio Fuel</div><div style="font-size:11px;color:var(--t2)">Never do HIIT fasted. Banana or dates 30 min before. LISS can be done fasted if preferred.</div></div>
+      <div style="background:var(--s2);border-radius:11px;padding:13px;border:1px solid var(--border)"><div style="font-size:18px;margin-bottom:5px">🦵</div><div style="font-size:12px;font-weight:700;margin-bottom:3px">Legs Day Rule</div><div style="font-size:11px;color:var(--t2)">Zero cardio on Friday legs day. Your legs need every bit of recovery available.</div></div>
+    </div>
+  </div>
+  <div class="cardio-blk">
+    <div class="cardio-hd" onclick="toggleCardio(this)">
+      <div><div style="font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:1px">Phase 1 — Weeks 1–4 · Base Building</div><div style="font-size:11px;color:var(--muted);margin-top:2px">LISS dominant · 2–3 sessions/week · 25–35 min</div></div>
+      <div style="display:flex;align-items:center;gap:9px"><span class="wk-badge" style="background:var(--blu2);color:var(--blue)">Low intensity</span><span style="color:var(--muted);font-size:14px">›</span></div>
+    </div>
+    <div class="cardio-body open">
+      <div class="c-tip"><strong>Phase 1 Goal:</strong> Build the cardio habit without burning out. LISS only for first 4 weeks. Let your body adapt to the training volume before adding high intensity.</div>
+      <table class="c-tbl">
+        <tr><th>Day</th><th>Type & Method</th><th>Duration</th><th>Intensity</th></tr>
+        <tr><td><span class="d-badge" style="background:var(--blu2);color:var(--blue)">Mon</span></td><td><strong>After Upper Body</strong><br><span style="font-size:11px;color:var(--muted)">Incline treadmill walk or elliptical</span></td><td style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--org)">25 min</td><td><span class="int-low">Low</span></td></tr>
+        <tr><td><span class="d-badge" style="background:var(--pur2);color:var(--pur)">Wed</span></td><td><strong>After Push Day</strong><br><span style="font-size:11px;color:var(--muted)">Stationary bike — steady pace</span></td><td style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--org)">30 min</td><td><span class="int-low">Low</span></td></tr>
+        <tr><td><span class="d-badge" style="background:var(--grn2);color:var(--grn)">Sat</span></td><td><strong>Rest Day Walk</strong><br><span style="font-size:11px;color:var(--muted)">Outdoor walk or easy treadmill</span></td><td style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--org)">35–45 min</td><td><span class="int-low">Very Low</span></td></tr>
+        <tr><td><span class="d-badge" style="background:var(--s3);color:var(--muted)">Fri/Sun</span></td><td><strong>No Cardio</strong><br><span style="font-size:11px;color:var(--muted)">Fri = legs day. Sun = full rest.</span></td><td style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--muted)">—</td><td><span class="int-rest">Rest</span></td></tr>
+      </table>
+    </div>
+  </div>
+  <div class="cardio-blk">
+    <div class="cardio-hd" onclick="toggleCardio(this)">
+      <div><div style="font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:1px">Phase 2 — Weeks 5–8 · Fat Burn Ramp</div><div style="font-size:11px;color:var(--muted);margin-top:2px">LISS + HIIT introduced · 3–4 sessions/week</div></div>
+      <div style="display:flex;align-items:center;gap:9px"><span class="wk-badge" style="background:var(--org2);color:var(--org)">Moderate</span><span style="color:var(--muted);font-size:14px">›</span></div>
+    </div>
+    <div class="cardio-body">
+      <div class="c-tip"><strong>Phase 2 Goal:</strong> HIIT introduced to accelerate fat loss. Only on Upper or Pull days — never Leg day. LISS continues on rest days. Weekly cardio volume increases.</div>
+      <table class="c-tbl">
+        <tr><th>Day</th><th>Type & Method</th><th>Duration</th><th>Intensity</th></tr>
+        <tr><td><span class="d-badge" style="background:var(--blu2);color:var(--blue)">Mon</span></td><td><strong>HIIT — After Upper</strong><br><span style="font-size:11px;color:var(--muted)">Jump rope: 30s on / 60s rest × 10 rounds</span></td><td style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--org)">15–18 min</td><td><span class="int-high">HIIT</span></td></tr>
+        <tr><td><span class="d-badge" style="background:var(--pur2);color:var(--pur)">Wed</span></td><td><strong>LISS — After Push</strong><br><span style="font-size:11px;color:var(--muted)">Treadmill incline walk 8–10% grade</span></td><td style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--org)">30 min</td><td><span class="int-low">LISS</span></td></tr>
+        <tr><td><span class="d-badge" style="background:var(--grn2);color:var(--grn)">Thu</span></td><td><strong>HIIT — After Pull</strong><br><span style="font-size:11px;color:var(--muted)">Bike sprints: 20s max / 40s easy × 12</span></td><td style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--org)">15 min</td><td><span class="int-high">HIIT</span></td></tr>
+        <tr><td><span class="d-badge" style="background:var(--grn2);color:var(--grn)">Sat</span></td><td><strong>Active Recovery</strong><br><span style="font-size:11px;color:var(--muted)">Long walk outdoors or elliptical easy</span></td><td style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--org)">40 min</td><td><span class="int-low">Walk</span></td></tr>
+        <tr><td><span class="d-badge" style="background:var(--s3);color:var(--muted)">Fri/Sun</span></td><td><strong>No Cardio</strong></td><td>—</td><td><span class="int-rest">Rest</span></td></tr>
+      </table>
+    </div>
+  </div>
+  <div class="cardio-blk">
+    <div class="cardio-hd" onclick="toggleCardio(this)">
+      <div><div style="font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:1px">Phase 3 — Weeks 9–12 · Peak Fat Loss</div><div style="font-size:11px;color:var(--muted);margin-top:2px">HIIT escalated · 4 sessions/week · Body comp sprint</div></div>
+      <div style="display:flex;align-items:center;gap:9px"><span class="wk-badge" style="background:var(--red2);color:var(--red)">High intensity</span><span style="color:var(--muted);font-size:14px">›</span></div>
+    </div>
+    <div class="cardio-body">
+      <div class="c-tip"><strong>Phase 3 Goal:</strong> Maximum fat burn. HIIT sessions longer. Eat more protein this phase (185g+) to protect muscle from increased cardio stress. Body fat should be heading to 15–16% by Week 10.</div>
+      <table class="c-tbl">
+        <tr><th>Day</th><th>Type & Method</th><th>Duration</th><th>Intensity</th></tr>
+        <tr><td><span class="d-badge" style="background:var(--blu2);color:var(--blue)">Mon</span></td><td><strong>HIIT — After Upper</strong><br><span style="font-size:11px;color:var(--muted)">Jump rope or treadmill sprints: 30s/45s rest × 14</span></td><td style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--org)">20 min</td><td><span class="int-high">HIIT</span></td></tr>
+        <tr><td><span class="d-badge" style="background:var(--org2);color:var(--org)">Tue</span></td><td><strong>LISS — After Lower</strong><br><span style="font-size:11px;color:var(--muted)">Elliptical easy — low impact post-squat</span></td><td style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--org)">25 min</td><td><span class="int-low">LISS</span></td></tr>
+        <tr><td><span class="d-badge" style="background:var(--pur2);color:var(--pur)">Wed</span></td><td><strong>HIIT — After Push</strong><br><span style="font-size:11px;color:var(--muted)">Bike sprints: 20s max / 40s rest × 14</span></td><td style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--org)">18 min</td><td><span class="int-high">HIIT</span></td></tr>
+        <tr><td><span class="d-badge" style="background:var(--grn2);color:var(--grn)">Thu</span></td><td><strong>LISS — After Pull</strong><br><span style="font-size:11px;color:var(--muted)">Incline treadmill 10% grade · 120–135 BPM</span></td><td style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--org)">30 min</td><td><span class="int-low">LISS</span></td></tr>
+        <tr><td><span class="d-badge" style="background:var(--red2);color:var(--red)">Fri</span></td><td><strong>No Cardio — Heavy Legs</strong></td><td>—</td><td><span class="int-rest">No Cardio</span></td></tr>
+        <tr><td><span class="d-badge" style="background:var(--grn2);color:var(--grn)">Sat</span></td><td><strong>Optional Walk</strong><br><span style="font-size:11px;color:var(--muted)">Outdoor 5,000+ steps</span></td><td style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--org)">45 min</td><td><span class="int-low">Walk</span></td></tr>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ══ ABS TAB ══ -->
+<div class="tab" id="tab-abs">
+  <div class="sec-hd"><div class="sec-tag c-yel">Core</div><h2 class="c-yel">ABS SYSTEM</h2><p>Trained 4× per week, built into your workout days. Pick 2–3 exercises from the library. 3–4 sets of 10–15 reps. Rotate each week so every core function gets hit — flexion, anti-rotation, lower abs, obliques.</p></div>
+  <div class="card" style="border:1px solid var(--yel2)">
+    <div class="card-title c-yel">Weekly Schedule — 4× per Week</div>
+    <div class="abs-sch">
+      <div class="abs-sch-row"><div class="abs-day-b" style="background:var(--blu2);color:var(--blue)">MON</div><div><div class="abs-exs">Upper Body Day — Flexion Focus</div><div class="abs-sub">Cable Crunch 3×15 · Hanging Knee/Leg Raise 3×12 · Decline Crunch 3×15</div></div></div>
+      <div class="abs-sch-row"><div class="abs-day-b" style="background:var(--pur2);color:var(--pur)">WED</div><div><div class="abs-exs">Push Day — Anti-Rotation + Stability</div><div class="abs-sub">Ab Wheel Rollout 3×12 · Pallof Press 3×12ea · Plank Variations 3×45s</div></div></div>
+      <div class="abs-sch-row"><div class="abs-day-b" style="background:var(--grn2);color:var(--grn)">THU</div><div><div class="abs-exs">Pull Day — Lower Abs + Rotation</div><div class="abs-sub">Hanging Leg Raise 4×10 · Dead Bug 3×10ea · V-Ups 3×15</div></div></div>
+      <div class="abs-sch-row"><div class="abs-day-b" style="background:var(--red2);color:var(--red)">FRI</div><div><div class="abs-exs">Legs Day — Obliques + Weighted</div><div class="abs-sub">Weighted Cable Crunch 4×15 · Copenhagen Plank 3×30s · Side Plank Hip Dip 3×12ea</div></div></div>
+    </div>
+  </div>
+  <div class="abs-grid">
+    <div class="abs-card"><div class="abs-nm">Cable Crunch (Kneeling)</div><span class="abs-cat" style="background:var(--blu2);color:var(--blue)">Upper Abs · Weighted</span><div class="abs-detail">Kneel at cable, rope behind head, crunch till elbows touch knees. 3s eccentric on the way up. Best weighted ab exercise. Add weight every 2 weeks.</div><div class="abs-sets">3–4 × 12–15 · progressive weight</div></div>
+    <div class="abs-card"><div class="abs-nm">Hanging Leg Raise</div><span class="abs-cat" style="background:var(--red2);color:var(--red)">Lower Abs · Hard</span><div class="abs-detail">Dead hang, raise straight legs to 90°. No swinging. Start bent-knee version. Progress to toes-to-bar by Phase 3.</div><div class="abs-sets">3–4 × 10–12 reps</div></div>
+    <div class="abs-card"><div class="abs-nm">Ab Wheel Rollout</div><span class="abs-cat" style="background:var(--org2);color:var(--org)">Full Core · Advanced</span><div class="abs-detail">From knees, roll out as far as possible without hips sagging. Pause at full extension. Pull back using abs. One of the best total core exercises.</div><div class="abs-sets">3 × 10–15 reps</div></div>
+    <div class="abs-card"><div class="abs-nm">Pallof Press (Cable)</div><span class="abs-cat" style="background:var(--pur2);color:var(--pur)">Anti-Rotation · Functional</span><div class="abs-detail">Stand side-on to cable, press handle straight out, hold 2s, return. Don't rotate. Anti-rotation challenge is the entire point.</div><div class="abs-sets">3 × 12–15 each side</div></div>
+    <div class="abs-card"><div class="abs-nm">Dead Bug</div><span class="abs-cat" style="background:var(--grn2);color:var(--grn)">Anti-Extension · Safe</span><div class="abs-detail">Lie on back, arms up, knees 90°. Lower opposite arm and leg simultaneously. Keep lower back flat. Best core stabilisation exercise — looks easy, isn't.</div><div class="abs-sets">3 × 10 each side</div></div>
+    <div class="abs-card"><div class="abs-nm">Copenhagen Plank</div><span class="abs-cat" style="background:var(--red2);color:var(--red)">Obliques · Hip Adductors</span><div class="abs-detail">Side plank with top foot on bench. Works obliques and hip adductors — directly addresses your under-developed leg/hip segment flagged on InBody.</div><div class="abs-sets">3 × 20–35s each side</div></div>
+    <div class="abs-card"><div class="abs-nm">V-Ups</div><span class="abs-cat" style="background:var(--yel2);color:var(--yel)">Full Abs · Dynamic</span><div class="abs-detail">Simultaneously raise legs and torso to touch hands to feet. Control descent. Keep feet off ground between reps for constant tension.</div><div class="abs-sets">3 × 15 reps</div></div>
+    <div class="abs-card"><div class="abs-nm">Dragon Flag (Phase 3)</div><span class="abs-cat" style="background:var(--red2);color:var(--red)">Advanced · Full Core</span><div class="abs-detail">On bench, grip behind head. Raise entire body in straight line. Lower slowly — this is the hard part. Start with negatives only. Brucelee-approved.</div><div class="abs-sets">3–4 × 5–8 negatives</div></div>
+    <div class="abs-card"><div class="abs-nm">Hollow Body Hold</div><span class="abs-cat" style="background:var(--grn2);color:var(--grn)">Full Core · Isometric</span><div class="abs-detail">Lower back pressed into floor, arms overhead, legs at 30–45°, hold. Everything tight. Add rocking for extra challenge.</div><div class="abs-sets">3–4 × 30–45s holds</div></div>
+    <div class="abs-card"><div class="abs-nm">Side Plank + Hip Dip</div><span class="abs-cat" style="background:var(--pur2);color:var(--pur)">Obliques · Lateral Core</span><div class="abs-detail">Side plank position. Dip hip to floor, raise back to alignment. Controlled movement. Great for lateral core which is often undertrained.</div><div class="abs-sets">3 × 12 dips each side</div></div>
+  </div>
+</div>
+
+<!-- ══ PHASE 1 TAB ══ -->
+<div class="tab" id="tab-p1">
+  <div class="phase-banner" style="background:linear-gradient(135deg,#1e3a8a,#2563ff)" data-bg="P1">
+    <div class="pb-tag">Phase 1 · Weeks 1–4</div>
+    <div class="pb-title">FOUNDATION & VOLUME</div>
+    <div class="pb-desc">Re-establish movement patterns. High volume at controlled intensity. Priority #1: leg hypertrophy — both legs flagged Under on InBody segmental analysis. You will hit legs twice weekly (Lower + dedicated Legs day). Build the base before overloading.</div>
+    <div class="pb-meta">
+      <div class="pb-m"><div class="pb-mk">Sets</div><div class="pb-mv">3–4 per exercise</div></div>
+      <div class="pb-m"><div class="pb-mk">Reps</div><div class="pb-mv">10–15</div></div>
+      <div class="pb-m"><div class="pb-mk">RPE</div><div class="pb-mv">7–8</div></div>
+      <div class="pb-m"><div class="pb-mk">Compound rest</div><div class="pb-mv">2–3 min</div></div>
+      <div class="pb-m"><div class="pb-mk">Isolation rest</div><div class="pb-mv">60–90s</div></div>
+      <div class="pb-m"><div class="pb-mk">Cardio</div><div class="pb-mv">LISS only · 2–3×/wk</div></div>
+    </div>
+  </div>
+
+  <!-- WEEK 1 -->
+  <div class="week-blk">
+    <div class="wk-hd" onclick="toggleWk(this)">
+      <div class="wk-hd-l"><div class="wk-num">W1</div><div><div class="wk-title">Orientation — Find Your Loads</div><div class="wk-sub">RPE 7 throughout · leave 3 reps in tank · log your baseline weights</div></div></div>
+      <div style="display:flex;align-items:center;gap:9px"><span class="wk-badge" style="background:var(--blu2);color:var(--blue)">Foundation</span><span class="wk-chev">›</span></div>
+    </div>
+    <div class="days-wrap open">
+      <!-- MON UPPER -->
+      <div class="day-card" style="border-top:3px solid var(--upper)">
+        <div class="dc-head"><div><div class="dc-day">Monday</div><div class="dc-session c-blue">UPPER BODY</div></div><span class="dc-chip bg-blue c-blue">Chest·Back·Shoulders</span></div>
+        <div class="ex-wrap">
+          <div class="ex-row main"><div class="ex-dot" style="background:var(--blue)"></div><div class="ex-nm">Barbell Bench Press</div><div class="ex-sc">4×10</div></div>
+          <div class="ex-row main"><div class="ex-dot" style="background:var(--blue)"></div><div class="ex-nm">Barbell Bent-Over Row (Pronated)</div><div class="ex-sc">4×10</div></div>
+          <div class="ex-row main"><div class="ex-dot" style="background:var(--blue)"></div><div class="ex-nm">Overhead Barbell Press</div><div class="ex-sc">3×10</div></div>
+          <div class="ex-row iso"><div class="ex-dot" style="background:var(--muted)"></div><div class="ex-nm">Incline DB Press</div><div class="ex-sc">3×12</div></div>
+          <div class="ex-row iso"><div class="ex-dot" style="background:var(--muted)"></div><div class="ex-nm">Cable Seated Row (Close grip)</div><div class="ex-sc">3×12</div></div>
+          <div class="ex-row iso"><div class="ex-dot" style="background:var(--muted)"></div><div class="ex-nm">DB Lateral Raise</div><div class="ex-sc">3×15</div></div>
+          <div class="ex-row iso"><div class="ex-dot" style="background:var(--muted)"></div><div class="ex-nm">Face Pull (Cable)</div><div class="ex-sc">3×15</div></div>
+        </div>
+        <div class="divider"><span>Abs</span></div>
+        <div class="ex-wrap">
+          <div class="ex-row abs"><div class="ex-dot" style="background:var(--yel)"></div><div class="ex-nm">Cable Crunch</div><div class="ex-sc">3×15</div></div>
+          <div class="ex-row abs"><div class="ex-dot" style="background:var(--yel)"></div><div class="ex-nm">Hanging Knee Raise</div><div class="ex-sc">3×12</div></div>
+        </div>
+        <div class="divider"><span>Cardio</span></div>
+        <div class="ex-wrap">
+          <div class="ex-row cardio-r"><div class="ex-dot" style="background:var(--org)"></div><div class="ex-nm">Incline Treadmill Walk or Elliptical</div><div class="ex-sc">25min LISS</div></div>
+        </div>
+      </div>
+      <!-- TUE LOWER -->
+      <div class="day-card" style="border-top:3px solid var(--lower)">
+        <div class="dc-head"><div><div class="dc-day">Tuesday</div><div class="dc-session c-org">LOWER BODY</div></div><span class="dc-chip bg-org c-org">Quad·Ham·Glute</span></div>
+        <div class="ex-wrap">
+          <div class="ex-row main"><div class="ex-dot" style="background:var(--org)"></div><div class="ex-nm">Barbell Back Squat</div><div class="ex-sc">4×10</div></div>
+          <div class="ex-row main"><div class="ex-dot" style="background:var(--org)"></div><div class="ex-nm">Romanian Deadlift</div><div class="ex-sc">4×10</div></div>
+          <div class="ex-row main"><div class="ex-dot" style="background:var(--org)"></div><div class="ex-nm">Bulgarian Split Squat (DB)</div><div class="ex-sc">3×10ea</div></div>
+          <div class="ex-row iso"><div class="ex-dot" style="background:var(--muted)"></div><div class="ex-nm">Leg Press (Wide stance)</div><div class="ex-sc">3×12</div></div>
+          <div class="ex-row iso"><div class="ex-dot" style="background:var(--muted)"></div><div class="ex-nm">Lying Leg Curl</div><div class="ex-sc">3×12</div></div>
+          <div class="ex-row iso"><div class="ex-dot" style="background:var(--muted)"></div><div class="ex-nm">Seated Calf Raise</div><div class="ex-sc">4×15</div></div>
+        </div>
+        <div class="divider"><span>Abs</span></div>
+        <div class="ex-wrap">
+          <div class="ex-row abs"><div class="ex-dot" style="background:var(--yel)"></div><div class="ex-nm">Plank Hold</div><div class="ex-sc">3×45s</div></div>
+          <div class="ex-row abs"><div class="ex-dot" style="background:var(--yel)"></div><div class="ex-nm">Pallof Press (Cable)</div><div class="ex-sc">3×12ea</div></div>
+        </div>
+      </div>
+      <!-- WED PUSH -->
+      <div class="day-card" style="border-top:3px solid var(--push)">
+        <div class="dc-head"><div><div class="dc-day">Wednesday</div><div class="dc-session c-pur">PUSH</div></div><span class="dc-chip bg-pur c-pur">Chest·Shoulders·Tris</span></div>
+        <div class="ex-wrap">
+          <div class="ex-row main"><div class="ex-dot" style="background:var(--pur)"></div><div class="ex-nm">Incline Barbell Press</div><div class="ex-sc">4×10</div></div>
+          <div class="ex-row main"><div class="ex-dot" style="background:var(--pur)"></div><div class="ex-nm">DB Shoulder Press (Seated)</div><div class="ex-sc">3×12</div></div>
+          <div class="ex-row iso"><div class="ex-dot" style="background:var(--muted)"></div><div class="ex-nm">Cable Fly (Mid)</div><div class="ex-sc">3×15</div></div>
+          <div class="ex-row iso"><div class="ex-dot" style="background:var(--muted)"></div><div class="ex-nm">DB Lateral Raise (3s eccentric)</div><div class="ex-sc">4×15</div></div>
+          <div class="ex-row iso"><div class="ex-dot" style="background:var(--muted)"></div><div class="ex-nm">Skull Crushers (EZ Bar)</div><div class="ex-sc">3×12</div></div>
+          <div class="ex-row iso"><div class="ex-dot" style="background:var(--muted)"></div><div class="ex-nm">Cable Rope Pushdown</div><div class="ex-sc">3×15</div></div>
+          <div class="ex-row iso"><div class="ex-dot" style="background:var(--muted)"></div><div class="ex-nm">Weighted Dips</div><div class="ex-sc">3×10</div></div>
+        </div>
+        <div class="divider"><span>Abs</span></div>
+        <div class="ex-wrap">
+          <div class="ex-row abs"><div class="ex-dot" style="background:var(--yel)"></div><div class="ex-nm">Ab Wheel Rollout</div><div class="ex-sc">3×12</div></div>
+          <div class="ex-row abs"><div class="ex-dot" style="background:var(--yel)"></div><div class="ex-nm">Side Plank</div><div class="ex-sc">3×35s ea</div></div>
+        </div>
+        <div class="divider"><span>Cardio</span></div>
+        <div class="ex-wrap">
+          <div class="ex-row cardio-r"><div class="ex-dot" style="background:var(--org)"></div><div class="ex-nm">Stationary Bike — Steady pace</div><div class="ex-sc">30min LISS</div></div>
+        </div>
+      </div>
+      <!-- THU PULL -->
+      <div class="day-card" style="border-top:3px solid var(--pull)">
+        <div class="dc-head"><div><div class="dc-day">Thursday</div><div class="dc-session c-grn">PULL</div></div><span class="dc-chip bg-grn c-grn">Back·Biceps·Rear Delts</span></div>
+        <div class="ex-wrap">
+          <div class="ex-row main"><div class="ex-dot" style="background:var(--grn)"></div><div class="ex-nm">Weighted Pull-Up (+5kg)</div><div class="ex-sc">4×8</div></div>
+          <div class="ex-row main"><div class="ex-dot" style="background:var(--grn)"></div><div class="ex-nm">T-Bar Row (Chest Supported)</div><div class="ex-sc">4×10</div></div>
+          <div class="ex-row iso"><div class="ex-dot" style="background:var(--muted)"></div><div class="ex-nm">Cable Lat Pulldown (Wide)</div><div class="ex-sc">3×12</div></div>
+          <div class="ex-row iso"><div class="ex-dot" style="background:var(--muted)"></div><div class="ex-nm">Straight-Arm Pulldown</div><div class="ex-sc">3×15</div></div>
+          <div class="ex-row iso"><div class="ex-dot" style="background:var(--muted)"></div><div class="ex-nm">Incline DB Curl (stretch focus)</div><div class="ex-sc">3×12</div></div>
+          <div class="ex-row iso"><div class="ex-dot" style="background:var(--muted)"></div><div class="ex-nm">Hammer Curl (Cross-body)</div><div class="ex-sc">3×12</div></div>
+          <div class="ex-row iso"><div class="ex-dot" style="background:var(--muted)"></div><div class="ex-nm">Rear Delt Cable Fly</div><div class="ex-sc">3×15</div></div>
+        </div>
+        <div class="divider"><span>Abs</span></div>
+        <div class="ex-wrap">
+          <div class="ex-row abs"><div class="ex-dot" style="background:var(--yel)"></div><div class="ex-nm">Hanging Leg Raise</div><div class="ex-sc">3×12</div></div>
+          <div class="ex-row abs"><div class="ex-dot" style="background:var(--yel)"></div><div class="ex-nm">Dead Bug</div><div class="ex-sc">3×10ea</div></div>
+        </div>
+      </div>
+      <!-- FRI LEGS -->
+      <div class="day-card" style="border-top:3px solid var(--legs)">
+        <div class="dc-head"><div><div class="dc-day">Friday</div><div class="dc-session c-red">LEGS ⚠️</div></div><span class="dc-chip bg-red c-red">Priority — Under on InBody</span></div>
+        <div class="ex-wrap">
+          <div class="ex-row main"><div class="ex-dot" style="background:var(--red)"></div><div class="ex-nm">Conventional Deadlift</div><div class="ex-sc">4×8</div></div>
+          <div class="ex-row main"><div class="ex-dot" style="background:var(--red)"></div><div class="ex-nm">Hack Squat (Machine)</div><div class="ex-sc">4×10</div></div>
+          <div class="ex-row main"><div class="ex-dot" style="background:var(--red)"></div><div class="ex-nm">Walking DB Lunges</div><div class="ex-sc">3×12ea</div></div>
+          <div class="ex-row iso"><div class="ex-dot" style="background:var(--muted)"></div><div class="ex-nm">Leg Extension (3s eccentric)</div><div class="ex-sc">4×15</div></div>
+          <div class="ex-row iso"><div class="ex-dot" style="background:var(--muted)"></div><div class="ex-nm">Nordic Hamstring Curl</div><div class="ex-sc">3×8</div></div>
+          <div class="ex-row iso"><div class="ex-dot" style="background:var(--muted)"></div><div class="ex-nm">Hip Thrust (Barbell)</div><div class="ex-sc">4×12</div></div>
+          <div class="ex-row iso"><div class="ex-dot" style="background:var(--muted)"></div><div class="ex-nm">Standing Calf Raise</div><div class="ex-sc">5×15</div></div>
+        </div>
+        <div class="divider"><span>Abs</span></div>
+        <div class="ex-wrap">
+          <div class="ex-row abs"><div class="ex-dot" style="background:var(--yel)"></div><div class="ex-nm">Copenhagen Plank</div><div class="ex-sc">3×25s ea</div></div>
+          <div class="ex-row abs"><div class="ex-dot" style="background:var(--yel)"></div><div class="ex-nm">V-Ups</div><div class="ex-sc">3×15</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- WEEKS 2-4 -->
+  <div class="week-blk">
+    <div class="wk-hd" onclick="toggleWk(this)">
+      <div class="wk-hd-l"><div class="wk-num">W2</div><div><div class="wk-title">Load Introduction</div><div class="wk-sub">+2.5–5kg all compounds · same split · RPE 8 · swap grip variations</div></div></div>
+      <div style="display:flex;align-items:center;gap:9px"><span class="wk-badge" style="background:var(--org2);color:var(--org)">+Load</span><span class="wk-chev">›</span></div>
+    </div>
+    <div class="days-wrap">
+      <div class="day-card" style="border-top:3px solid var(--upper)"><div class="dc-head"><div><div class="dc-day">Monday</div><div class="dc-session c-blue">UPPER</div></div><span class="dc-chip bg-blue c-blue">+2.5kg compounds</span></div><div class="ex-wrap"><div class="ex-row main"><div class="ex-dot" style="background:var(--blue)"></div><div class="ex-nm">Barbell Bench Press (+2.5kg)</div><div class="ex-sc">4×10</div></div><div class="ex-row main"><div class="ex-dot" style="background:var(--blue)"></div><div class="ex-nm">Barbell Row — Supinated grip</div><div class="ex-sc">4×10</div></div><div class="ex-row main"><div class="ex-dot" style="background:var(--blue)"></div><div class="ex-nm">Arnold Press (DB)</div><div class="ex-sc">3×12</div></div><div class="ex-row iso"><div class="ex-dot" style="background:var(--muted)"></div><div class="ex-nm">Pec Deck Machine</div><div class="ex-sc">3×15</div></div><div class="ex-row iso"><div class="ex-dot" style="background:var(--muted)"></div><div class="ex-nm">Single-Arm DB Row</div><div class="ex-sc">3×12ea</div></div><div class="ex-row iso"><div class="ex-dot" style="background:var(--muted)"></div><div class="ex-nm">Cable Lateral Raise</div><div class="ex-sc">4×15</div></div><div class="ex-row iso"><div class="ex-dot" style="background:var(--muted)"></div><div class="ex-nm">EZ Bar Curl + Tricep Pushdown (SS)</div><div class="ex-sc">3×12+12</div></div></div><div class="divider"><span>Abs + Cardio</span></div><div class="ex-wrap"><div class="ex-row abs"><div class="ex-dot" style="background:var(--yel)"></div><div class="ex-nm">Kneeling Cable Crunch</div><div class="ex-sc">3×15</div></div><div class="ex-row abs"><div class="ex-dot" style="background:var(--yel)"></div><div class="ex-nm">Hollow Body Hold</div><div class="ex-sc">3×30s</div></div><div class="ex-row cardio-r"><div class="ex-dot" style="background:var(--org)"></div><div class="ex-nm">Elliptical LISS</div><div class="ex-sc">30min</div></div></div></div>
+      <div class="day-card" style="border-top:3px solid var(--lower)"><div class="dc-head"><div><div class="dc-day">Tuesday</div><div class="dc-session c-org">LOWER</div></div><span class="dc-chip bg-org c-org">+2.5kg squat/RDL</span></div><div class="ex-wrap"><div class="ex-row main"><div class="ex-dot" style="background:var(--org)"></div><div class="ex-nm">Barbell Back Squat (+2.5kg)</div><div class="ex-sc">4×10</div></div><div class="ex-row main"><div class="ex-dot" style="background:var(--org)"></div><div class="ex-nm">Romanian Deadlift (+2.5kg)</div><div class="ex-sc">4×10</div></div><div class="ex-row main"><div class="ex-dot" style="background:var(--org)"></div><div class="ex-nm">Bulgarian Split Squat (heavier)</div><div class="ex-sc">3×12ea</div></div><div class="ex-row iso"><div class="ex-dot" style="background:var(--muted)"></div><div class="ex-nm">Leg Press (Narrow stance)</div><div class="ex-sc">3×12</div></div><div class="ex-row iso"><div class="ex-dot" style="background:var(--muted)"></div><div class="ex-nm">Seated Leg Curl</div><div class="ex-sc">3×12</div></div><div class="ex-row iso"><div class="ex-dot" style="background:var(--muted)"></div><div class="ex-nm">Standing Calf Raise</div><div class="ex-sc">4×15</div></div></div><div class="divider"><span>Abs</span></div><div class="ex-wrap"><div class="ex-row abs"><div class="ex-dot" style="background:var(--yel)"></div><div class="ex-nm">Ab Wheel Rollout</div><div class="ex-sc">3×12</div></div><div class="ex-row abs"><div class="ex-dot" style="background:var(--yel)"></div><div class="ex-nm">Pallof Press</div><div class="ex-sc">3×12ea</div></div></div></div>
+      <div class="day-card" style="border-top:3px solid var(--push)"><div class="dc-head"><div><div class="dc-day">Wednesday</div><div class="dc-session c-pur">PUSH</div></div><span class="dc-chip bg-pur c-pur">Variation swap</span></div><div class="ex-wrap"><div class="ex-row main"><div class="ex-dot" style="background:var(--pur)"></div><div class="ex-nm">Flat DB Press</div><div class="ex-sc">4×10</div></div><div class="ex-row main"><div class="ex-dot" style="background:var(--pur)"></div><div class="ex-nm">Smith Machine Shoulder Press</div><div class="ex-sc">3×12</div></div><div class="ex-row iso"><div class="ex-dot" style="background:var(--muted)"></div><div class="ex-nm">Cable High-to-Low Fly</div><div class="ex-sc">3×15</div></div><div class="ex-row iso"><div class="ex-dot" style="background:var(--muted)"></div><div class="ex-nm">DB Lateral Raise</div><div class="ex-sc">4×15</div></div><div class="ex-row iso"><div class="ex-dot" style="background:var(--muted)"></div><div class="ex-nm">Close-Grip Bench Press</div><div class="ex-sc">3×12</div></div><div class="ex-row iso"><div class="ex-dot" style="background:var(--muted)"></div><div class="ex-nm">Cable Overhead Tricep Extension</div><div class="ex-sc">3×15</div></div><div class="ex-row iso"><div class="ex-dot" style="background:var(--muted)"></div><div class="ex-nm">Rear Delt Machine Fly</div><div class="ex-sc">3×15</div></div></div><div class="divider"><span>Abs + Cardio</span></div><div class="ex-wrap"><div class="ex-row abs"><div class="ex-dot" style="background:var(--yel)"></div><div class="ex-nm">Decline Weighted Crunch</div><div class="ex-sc">3×15</div></div><div class="ex-row abs"><div class="ex-dot" style="background:var(--yel)"></div><div class="ex-nm">Copenhagen Plank</div><div class="ex-sc">3×25s ea</div></div><div class="ex-row cardio-r"><div class="ex-dot" style="background:var(--org)"></div><div class="ex-nm">Stationary Bike LISS</div><div class="ex-sc">30min</div></div></div></div>
+      <div class="day-card" style="border-top:3px solid var(--pull)"><div class="dc-head"><div><div class="dc-day">Thursday</div><div class="dc-session c-grn">PULL</div></div><span class="dc-chip bg-grn c-grn">Width focus</span></div><div class="ex-wrap"><div class="ex-row main"><div class="ex-dot" style="background:var(--grn)"></div><div class="ex-nm">Weighted Pull-Up (+7.5kg)</div><div class="ex-sc">4×8</div></div><div class="ex-row main"><div class="ex-dot" style="background:var(--grn)"></div><div class="ex-nm">Meadows Row (Barbell)</div><div class="ex-sc">4×10ea</div></div><div class="ex-row iso"><div class="ex-dot" style="background:var(--muted)"></div><div class="ex-nm">Lat Pulldown (Underhand)</div><div class="ex-sc">3×12</div></div><div class="ex-row iso"><div class="ex-dot" style="background:var(--muted)"></div><div class="ex-nm">Seated Cable Row (Wide)</div><div class="ex-sc">3×12</div></div><div class="ex-row iso"><div class="ex-dot" style="background:var(--muted)"></div><div class="ex-nm">Spider Curl (DB incline)</div><div class="ex-sc">3×12</div></div><div class="ex-row iso"><div class="ex-dot" style="background:var(--muted)"></div><div class="ex-nm">Cable Curl Bilateral</div><div class="ex-sc">3×15</div></div><div class="ex-row iso"><div class="ex-dot" style="background:var(--muted)"></div><div class="ex-nm">Face Pull</div><div class="ex-sc">3×20</div></div></div><div class="divider"><span>Abs</span></div><div class="ex-wrap"><div class="ex-row abs"><div class="ex-dot" style="background:var(--yel)"></div><div class="ex-nm">Hanging Leg Raise</div><div class="ex-sc">4×12</div></div><div class="ex-row abs"><div class="ex-dot" style="background:var(--yel)"></div><div class="ex-nm">Dead Bug</div><div class="ex-sc">3×10ea</div></div></div></div>
+      <div class="day-card" style="border-top:3px solid var(--legs)"><div class="dc-head"><div><div class="dc-day">Friday</div><div class="dc-session c-red">LEGS ⚠️</div></div><span class="dc-chip bg-red c-red">+5kg deadlift</span></div><div class="ex-wrap"><div class="ex-row main"><div class="ex-dot" style="background:var(--red)"></div><div class="ex-nm">Conventional Deadlift (+5kg)</div><div class="ex-sc">4×8</div></div><div class="ex-row main"><div class="ex-dot" style="background:var(--red)"></div><div class="ex-nm">Hack Squat Machine</div><div class="ex-sc">4×12</div></div><div class="ex-row main"><div class="ex-dot" style="background:var(--red)"></div><div class="ex-nm">Barbell Hip Thrust</div><div class="ex-sc">4×12</div></div><div class="ex-row iso"><div class="ex-dot" style="background:var(--muted)"></div><div class="ex-nm">Leg Extension (Pause at top)</div><div class="ex-sc">4×15</div></div><div class="ex-row iso"><div class="ex-dot" style="background:var(--muted)"></div><div class="ex-nm">Nordic Hamstring Curl</div><div class="ex-sc">3×8</div></div><div class="ex-row iso"><div class="ex-dot" style="background:var(--muted)"></div><div class="ex-nm">Cable Glute Kickback</div><div class="ex-sc">3×15ea</div></div><div class="ex-row iso"><div class="ex-dot" style="background:var(--muted)"></div><div class="ex-nm">Seated Calf Raise</div><div class="ex-sc">5×15</div></div></div><div class="divider"><span>Abs</span></div><div class="ex-wrap"><div class="ex-row abs"><div class="ex-dot" style="background:var(--yel)"></div><div class="ex-nm">V-Ups</div><div class="ex-sc">3×15</div></div><div class="ex-row abs"><div class="ex-dot" style="background:var(--yel)"></div><div class="ex-nm">Pallof Press</div><div class="ex-sc">3×12ea</div></div></div></div>
+    </div>
+  </div>
+  <div class="week-blk">
+    <div class="wk-hd" onclick="toggleWk(this)">
+      <div class="wk-hd-l"><div class="wk-num">W3</div><div><div class="wk-title">Peak Volume</div><div class="wk-sub">+5 sets on legs · RPE 8–9 · push last set near failure · +5kg compounds</div></div></div>
+      <div style="display:flex;align-items:center;gap:9px"><span class="wk-badge" style="background:var(--red2);color:var(--red)">Overload</span><span class="wk-chev">›</span></div>
+    </div>
+    <div class="days-wrap">
+      <div class="day-card" style="border-top:3px solid var(--upper)"><div class="dc-head"><div><div class="dc-day">Monday</div><div class="dc-session c-blue">UPPER</div></div><span class="dc-chip bg-blue c-blue">5×8 bench</span></div><div class="ex-wrap"><div class="ex-row main"><div class="ex-dot" style="background:var(--blue)"></div><div class="ex-nm">Barbell Bench Press (Heaviest)</div><div class="ex-sc">5×8</div></div><div class="ex-row main"><div class="ex-dot" style="background:var(--blue)"></div><div class="ex-nm">Chest-Supported DB Row</div><div class="ex-sc">4×10</div></div><div class="ex-row main"><div class="ex-dot" style="background:var(--blue)"></div><div class="ex-nm">Overhead Barbell Press</div><div class="ex-sc">4×10</div></div><div class="ex-row iso"><div class="ex-dot" style="background:var(--muted)"></div><div class="ex-nm">Incline DB Fly</div><div class="ex-sc">4×12</div></div><div class="ex-row iso"><div class="ex-dot" style="background:var(--muted)"></div><div class="ex-nm">Cable Row (Overhand)</div><div class="ex-sc">4×12</div></div><div class="ex-row iso"><div class="ex-dot" style="background:var(--muted)"></div><div class="ex-nm">Upright Row (Cable)</div><div class="ex-sc">3×15</div></div><div class="ex-row iso"><div class="ex-dot" style="background:var(--muted)"></div><div class="ex-nm">Preacher Curl Machine</div><div class="ex-sc">3×12</div></div></div><div class="divider"><span>Abs + Cardio</span></div><div class="ex-wrap"><div class="ex-row abs"><div class="ex-dot" style="background:var(--yel)"></div><div class="ex-nm">Cable Crunch</div><div class="ex-sc">4×15</div></div><div class="ex-row abs"><div class="ex-dot" style="background:var(--yel)"></div><div class="ex-nm">Hanging Leg Raise</div><div class="ex-sc">3×12</div></div><div class="ex-row cardio-r"><div class="ex-dot" style="background:var(--org)"></div><div class="ex-nm">Incline Treadmill Walk</div><div class="ex-sc">30min LISS</div></div></div></div>
+      <div class="day-card" style="border-top:3px solid var(--lower)"><div class="dc-head"><div><div class="dc-day">Tuesday</div><div class="dc-session c-org">LOWER</div></div><span class="dc-chip bg-org c-org">5×10 squats</span></div><div class="ex-wrap"><div class="ex-row main"><div class="ex-dot" style="background:var(--org)"></div><div class="ex-nm">Barbell Back Squat</div><div class="ex-sc">5×10</div></div><div class="ex-row main"><div class="ex-dot" style="background:var(--org)"></div><div class="ex-nm">Romanian Deadlift</div><div class="ex-sc">4×10</div></div><div class="ex-row main"><div class="ex-dot" style="background:var(--org)"></div><div class="ex-nm">Bulgarian Split Squat</div><div class="ex-sc">4×10ea</div></div><div class="ex-row iso"><div class="ex-dot" style="background:var(--muted)"></div><div class="ex-nm">Leg Press (Drop set last)</div><div class="ex-sc">4×15+DS</div></div><div class="ex-row iso"><div class="ex-dot" style="background:var(--muted)"></div><div class="ex-nm">Lying Leg Curl</div><div class="ex-sc">4×12</div></div><div class="ex-row iso"><div class="ex-dot" style="background:var(--muted)"></div><div class="ex-nm">Seated Calf Raise</div><div class="ex-sc">5×20</div></div></div><div class="divider"><span>Abs</span></div><div class="ex-wrap"><div class="ex-row abs"><div class="ex-dot" style="background:var(--yel)"></div><div class="ex-nm">Ab Wheel Rollout</div><div class="ex-sc">4×12</div></div><div class="ex-row abs"><div class="ex-dot" style="background:var(--yel)"></div><div class="ex-nm">Plank</div><div class="ex-sc">3×60s</div></div></div></div>
+      <div class="day-card" style="border-top:3px solid var(--push)"><div class="dc-head"><div><div class="dc-day">Wednesday</div><div class="dc-session c-pur">PUSH</div></div><span class="dc-chip bg-pur c-pur">Near failure</span></div><div class="ex-wrap"><div class="ex-row main"><div class="ex-dot" style="background:var(--pur)"></div><div class="ex-nm">Incline Barbell Press</div><div class="ex-sc">5×8</div></div><div class="ex-row main"><div class="ex-dot" style="background:var(--pur)"></div><div class="ex-nm">OHP Barbell (Standing)</div><div class="ex-sc">4×8</div></div><div class="ex-row iso"><div class="ex-dot" style="background:var(--muted)"></div><div class="ex-nm">Pec Deck Machine</div><div class="ex-sc">4×15</div></div><div class="ex-row iso"><div class="ex-dot" style="background:var(--muted)"></div><div class="ex-nm">Lateral Raise (Cable)</div><div class="ex-sc">4×15</div></div><div class="ex-row iso"><div class="ex-dot" style="background:var(--muted)"></div><div class="ex-nm">Skull Crushers</div><div class="ex-sc">4×12</div></div><div class="ex-row iso"><div class="ex-dot" style="background:var(--muted)"></div><div class="ex-nm">Rope Pushdown (AMRAP last set)</div><div class="ex-sc">4×15+F</div></div><div class="ex-row iso"><div class="ex-dot" style="background:var(--muted)"></div><div class="ex-nm">Weighted Dips</div><div class="ex-sc">3×10</div></div></div><div class="divider"><span>Abs + Cardio</span></div><div class="ex-wrap"><div class="ex-row abs"><div class="ex-dot" style="background:var(--yel)"></div><div class="ex-nm">Kneeling Cable Crunch</div><div class="ex-sc">4×15</div></div><div class="ex-row abs"><div class="ex-dot" style="background:var(--yel)"></div><div class="ex-nm">Copenhagen Plank</div><div class="ex-sc">3×30s ea</div></div><div class="ex-row cardio-r"><div class="ex-dot" style="background:var(--org)"></div><div class="ex-nm">Stationary Bike LISS</div><div class="ex-sc">30min</div></div></div></div>
+      <div class="day-card" style="border-top:3px solid var(--pull)"><div class="dc-head"><div><div class="dc-day">Thursday</div><div class="dc-session c-grn">PULL</div></div><span class="dc-chip bg-grn c-grn">5×8 pull-ups</span></div><div class="ex-wrap"><div class="ex-row main"><div class="ex-dot" style="background:var(--grn)"></div><div class="ex-nm">Weighted Pull-Up (+10kg)</div><div class="ex-sc">5×8</div></div><div class="ex-row main"><div class="ex-dot" style="background:var(--grn)"></div><div class="ex-nm">T-Bar Row</div><div class="ex-sc">4×10</div></div><div class="ex-row iso"><div class="ex-dot" style="background:var(--muted)"></div><div class="ex-nm">Lat Pulldown (Wide, 2s stretch)</div><div class="ex-sc">4×12</div></div><div class="ex-row iso"><div class="ex-dot" style="background:var(--muted)"></div><div class="ex-nm">Straight-Arm Pulldown</div><div class="ex-sc">4×15</div></div><div class="ex-row iso"><div class="ex-dot" style="background:var(--muted)"></div><div class="ex-nm">Barbell Curl (Heavy)</div><div class="ex-sc">4×10</div></div><div class="ex-row iso"><div class="ex-dot" style="background:var(--muted)"></div><div class="ex-nm">Incline DB Curl</div><div class="ex-sc">3×12</div></div><div class="ex-row iso"><div class="ex-dot" style="background:var(--muted)"></div><div class="ex-nm">Rear Delt Cable Fly</div><div class="ex-sc">3×20</div></div></div><div class="divider"><span>Abs</span></div><div class="ex-wrap"><div class="ex-row abs"><div class="ex-dot" style="background:var(--yel)"></div><div class="ex-nm">Hanging Leg Raise (Weighted)</div><div class="ex-sc">4×10</div></div><div class="ex-row abs"><div class="ex-dot" style="background:var(--yel)"></div><div class="ex-nm">Dead Bug</div><div class="ex-sc">3×12ea</div></div></div></div>
+      <div class="day-card" style="border-top:3px solid var(--legs)"><div class="dc-head"><div><div class="dc-day">Friday</div><div class="dc-session c-red">LEGS ⚠️</div></div><span class="dc-chip bg-red c-red">Peak leg volume</span></div><div class="ex-wrap"><div class="ex-row main"><div class="ex-dot" style="background:var(--red)"></div><div class="ex-nm">Conventional Deadlift</div><div class="ex-sc">5×5</div></div><div class="ex-row main"><div class="ex-dot" style="background:var(--red)"></div><div class="ex-nm">Hack Squat Machine</div><div class="ex-sc">5×10</div></div><div class="ex-row main"><div class="ex-dot" style="background:var(--red)"></div><div class="ex-nm">Walking Lunges (Heavy DB)</div><div class="ex-sc">4×12ea</div></div><div class="ex-row iso"><div class="ex-dot" style="background:var(--muted)"></div><div class="ex-nm">Leg Extension (Drop set)</div><div class="ex-sc">4×15+DS</div></div><div class="ex-row iso"><div class="ex-dot" style="background:var(--muted)"></div><div class="ex-nm">Nordic Hamstring Curl</div><div class="ex-sc">4×8</div></div><div class="ex-row iso"><div class="ex-dot" style="background:var(--muted)"></div><div class="ex-nm">Hip Thrust Barbell</div><div class="ex-sc">4×12</div></div><div class="ex-row iso"><div class="ex-dot" style="background:var(--muted)"></div><div class="ex-nm">Standing Calf Raise</div><div class="ex-sc">5×15</div></div></div><div class="divider"><span>Abs</span></div><div class="ex-wrap"><div class="ex-row abs"><div class="ex-dot" style="background:var(--yel)"></div><div class="ex-nm">V-Ups</div><div class="ex-sc">4×15</div></div><div class="ex-row abs"><div class="ex-dot" style="background:var(--yel)"></div><div class="ex-nm">Copenhagen Plank</div><div class="ex-sc">3×30s ea</div></div></div></div>
+    </div>
+  </div>
+  <div class="week-blk">
+    <div class="wk-hd" onclick="toggleWk(this)">
+      <div class="wk-hd-l"><div class="wk-num">W4</div><div><div class="wk-title">Deload + InBody Check #1</div><div class="wk-sub">–30% load · RPE 6 · Book InBody scan end of this week</div></div></div>
+      <div style="display:flex;align-items:center;gap:9px"><span class="wk-badge" style="background:var(--grn2);color:var(--grn)">Deload</span><span class="wk-chev">›</span></div>
+    </div>
+    <div class="days-wrap">
+      <div class="day-card" style="border-top:3px solid var(--muted);grid-column:1/-1"><div class="dc-head"><div><div class="dc-day">Week 4 — All Days</div><div class="dc-session" style="color:var(--grn)">DELOAD</div></div><span class="dc-chip" style="background:var(--grn2);color:var(--grn)">Recovery week</span></div><div class="ex-wrap"><div class="ex-row iso"><div class="ex-dot" style="background:var(--muted)"></div><div class="ex-nm">Same 5-day split · all compound loads at –25–30%</div><div class="ex-sc">3×8</div></div><div class="ex-row iso"><div class="ex-dot" style="background:var(--muted)"></div><div class="ex-nm">Reduce sets to 2–3 · no failure · slow controlled form</div><div class="ex-sc">2–3×10</div></div><div class="ex-row abs"><div class="ex-dot" style="background:var(--yel)"></div><div class="ex-nm">Abs: Plank + Dead Bug only — no heavy loaded abs</div><div class="ex-sc">3×30s</div></div><div class="ex-row cardio-r"><div class="ex-dot" style="background:var(--org)"></div><div class="ex-nm">Cardio: 2× LISS walks only · no HIIT this week</div><div class="ex-sc">30min</div></div><div class="ex-row main"><div class="ex-dot" style="background:var(--grn)"></div><div class="ex-nm">📊 Book InBody scan — Friday or Saturday — compare to baseline</div><div class="ex-sc">Week 4</div></div></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ PHASE 2 TAB ══ -->
+<div class="tab" id="tab-p2">
+  <div class="phase-banner" style="background:linear-gradient(135deg,#4c1d95,#7c3aed)" data-bg="P2">
+    <div class="pb-tag">Phase 2 · Weeks 5–8</div>
+    <div class="pb-title">HYPERTROPHY OVERLOAD</div>
+    <div class="pb-desc">Exercise variations change entirely. Supersets and mechanical drop sets introduced. HIIT cardio starts. Visible changes should appear by Week 6. If legs still lagging at Week 8 InBody — add a 6th leg session on Saturdays.</div>
+    <div class="pb-meta">
+      <div class="pb-m"><div class="pb-mk">Sets</div><div class="pb-mv">4–5 per compound</div></div>
+      <div class="pb-m"><div class="pb-mk">Reps</div><div class="pb-mv">8–15 varies</div></div>
+      <div class="pb-m"><div class="pb-mk">RPE</div><div class="pb-mv">8–9</div></div>
+      <div class="pb-m"><div class="pb-mk">Techniques</div><div class="pb-mv">SS · Mech drops · Pause reps</div></div>
+      <div class="pb-m"><div class="pb-mk">Cardio</div><div class="pb-mv">LISS + HIIT · 3–4×/wk</div></div>
+    </div>
+  </div>
+  <div class="week-blk"><div class="wk-hd" onclick="toggleWk(this)"><div class="wk-hd-l"><div class="wk-num">W5</div><div><div class="wk-title">New Variations — Fresh Stimulus</div><div class="wk-sub">All new exercise selection · supersets · HIIT starts Monday</div></div></div><div style="display:flex;align-items:center;gap:9px"><span class="wk-badge" style="background:var(--pur2);color:var(--pur)">Hypertrophy</span><span class="wk-chev">›</span></div></div>
+    <div class="days-wrap open">
+      <div class="day-card" style="border-top:3px solid var(--upper)"><div class="dc-head"><div><div class="dc-day">Monday</div><div class="dc-session c-blue">UPPER</div></div><span class="dc-chip bg-blue c-blue">SS introduced</span></div><div class="ex-wrap"><div class="ex-row main"><div class="ex-dot" style="background:var(--blue)"></div><div class="ex-nm">Incline DB Press (1s pause)</div><div class="ex-sc">4×10</div></div><div class="ex-row main"><div class="ex-dot" style="background:var(--blue)"></div><div class="ex-nm">Barbell Row (Supinated grip)</div><div class="ex-sc">4×10</div></div><div class="ex-row main"><div class="ex-dot" style="background:var(--blue)"></div><div class="ex-nm">DB Shoulder Press</div><div class="ex-sc">4×12</div></div><div class="ex-row iso"><div class="ex-dot" style="background:var(--muted)"></div><div class="ex-nm">Cable Fly → Pushup (Superset)</div><div class="ex-sc">4×12+8</div></div><div class="ex-row iso"><div class="ex-dot" style="background:var(--muted)"></div><div class="ex-nm">Single-Arm DB Row</div><div class="ex-sc">4×12ea</div></div><div class="ex-row iso"><div class="ex-dot" style="background:var(--muted)"></div><div class="ex-nm">Cable Lateral Raise</div><div class="ex-sc">4×15</div></div><div class="ex-row iso"><div class="ex-dot" style="background:var(--muted)"></div><div class="ex-nm">EZ Curl + Rope Pushdown (SS)</div><div class="ex-sc">3×12+12</div></div></div><div class="divider"><span>Abs + Cardio HIIT</span></div><div class="ex-wrap"><div class="ex-row abs"><div class="ex-dot" style="background:var(--yel)"></div><div class="ex-nm">Weighted Cable Crunch</div><div class="ex-sc">4×15</div></div><div class="ex-row abs"><div class="ex-dot" style="background:var(--yel)"></div><div class="ex-nm">Hollow Body Rock</div><div class="ex-sc">3×20</div></div><div class="ex-row cardio-r"><div class="ex-dot" style="background:var(--red)"></div><div class="ex-nm">Jump Rope HIIT: 30s on / 60s rest × 10</div><div class="ex-sc">15–18min</div></div></div></div>
+      <div class="day-card" style="border-top:3px solid var(--lower)"><div class="dc-head"><div><div class="dc-day">Tuesday</div><div class="dc-session c-org">LOWER</div></div><span class="dc-chip bg-org c-org">Quad dominance</span></div><div class="ex-wrap"><div class="ex-row main"><div class="ex-dot" style="background:var(--org)"></div><div class="ex-nm">Front Squat (or Goblet)</div><div class="ex-sc">4×8</div></div><div class="ex-row main"><div class="ex-dot" style="background:var(--org)"></div><div class="ex-nm">Romanian Deadlift (4s eccentric)</div><div class="ex-sc">4×10</div></div><div class="ex-row main"><div class="ex-dot" style="background:var(--org)"></div><div class="ex-nm">Bulgarian Split Squat (Heavy)</div><div class="ex-sc">4×10ea</div></div><div class="ex-row iso"><div class="ex-dot" style="background:var(--muted)"></div><div class="ex-nm">Leg Press (Drop set last)</div><div class="ex-sc">4×12+DS</div></div><div class="ex-row iso"><div class="ex-dot" style="background:var(--muted)"></div><div class="ex-nm">Seated Leg Curl</div><div class="ex-sc">4×12</div></div><div class="ex-row iso"><div class="ex-dot" style="background:var(--muted)"></div><div class="ex-nm">Standing Calf Raise</div><div class="ex-sc">5×15</div></div></div><div class="divider"><span>Abs + Cardio LISS</span></div><div class="ex-wrap"><div class="ex-row abs"><div class="ex-dot" style="background:var(--yel)"></div><div class="ex-nm">Ab Wheel Rollout</div><div class="ex-sc">4×12</div></div><div class="ex-row abs"><div class="ex-dot" style="background:var(--yel)"></div><div class="ex-nm">Side Plank + Hip Dip</div><div class="ex-sc">3×12ea</div></div><div class="ex-row cardio-r"><div class="ex-dot" style="background:var(--org)"></div><div class="ex-nm">Elliptical LISS (low impact)</div><div class="ex-sc">25min</div></div></div></div>
+      <div class="day-card" style="border-top:3px solid var(--push)"><div class="dc-head"><div><div class="dc-day">Wednesday</div><div class="dc-session c-pur">PUSH</div></div><span class="dc-chip bg-pur c-pur">21s laterals</span></div><div class="ex-wrap"><div class="ex-row main"><div class="ex-dot" style="background:var(--pur)"></div><div class="ex-nm">Flat Barbell Bench Press</div><div class="ex-sc">5×8</div></div><div class="ex-row main"><div class="ex-dot" style="background:var(--pur)"></div><div class="ex-nm">Decline DB Press</div><div class="ex-sc">4×10</div></div><div class="ex-row iso"><div class="ex-dot" style="background:var(--muted)"></div><div class="ex-nm">Pec Deck + Incline DB Fly (SS)</div><div class="ex-sc">4×12+10</div></div><div class="ex-row iso"><div class="ex-dot" style="background:var(--muted)"></div><div class="ex-nm">DB Lateral Raise (21s method)</div><div class="ex-sc">4×21</div></div><div class="ex-row iso"><div class="ex-dot" style="background:var(--muted)"></div><div class="ex-nm">Close-Grip Bench Press</div><div class="ex-sc">4×10</div></div><div class="ex-row iso"><div class="ex-dot" style="background:var(--muted)"></div><div class="ex-nm">Cable Overhead Tricep Extension</div><div class="ex-sc">4×15</div></div></div><div class="divider"><span>Abs + Cardio HIIT</span></div><div class="ex-wrap"><div class="ex-row abs"><div class="ex-dot" style="background:var(--yel)"></div><div class="ex-nm">Decline Sit-Up (Weighted)</div><div class="ex-sc">4×15</div></div><div class="ex-row abs"><div class="ex-dot" style="background:var(--yel)"></div><div class="ex-nm">Copenhagen Plank</div><div class="ex-sc">3×30s ea</div></div><div class="ex-row cardio-r"><div class="ex-dot" style="background:var(--red)"></div><div class="ex-nm">Bike Sprints HIIT: 20s max / 40s rest × 12</div><div class="ex-sc">15min</div></div></div></div>
+      <div class="day-card" style="border-top:3px solid var(--pull)"><div class="dc-head"><div><div class="dc-day">Thursday</div><div class="dc-session c-grn">PULL</div></div><span class="dc-chip bg-grn c-grn">Arm priority</span></div><div class="ex-wrap"><div class="ex-row main"><div class="ex-dot" style="background:var(--grn)"></div><div class="ex-nm">Weighted Pull-Up (+10kg)</div><div class="ex-sc">5×8</div></div><div class="ex-row main"><div class="ex-dot" style="background:var(--grn)"></div><div class="ex-nm">Seal Row (DB on incline bench)</div><div class="ex-sc">4×10</div></div><div class="ex-row iso"><div class="ex-dot" style="background:var(--muted)"></div><div class="ex-nm">Lat Pulldown (Underhand)</div><div class="ex-sc">4×12</div></div><div class="ex-row iso"><div class="ex-dot" style="background:var(--muted)"></div><div class="ex-nm">Straight-Arm Pulldown</div><div class="ex-sc">4×15</div></div><div class="ex-row iso"><div class="ex-dot" style="background:var(--muted)"></div><div class="ex-nm">Preacher Curl + Hammer Curl (SS)</div><div class="ex-sc">4×10+10</div></div><div class="ex-row iso"><div class="ex-dot" style="background:var(--muted)"></div><div class="ex-nm">Rear Delt Fly Machine</div><div class="ex-sc">4×20</div></div></div><div class="divider"><span>Abs + Cardio LISS</span></div><div class="ex-wrap"><div class="ex-row abs"><div class="ex-dot" style="background:var(--yel)"></div><div class="ex-nm">Hanging Leg Raise</div><div class="ex-sc">4×12</div></div><div class="ex-row abs"><div class="ex-dot" style="background:var(--yel)"></div><div class="ex-nm">Cable Crunch</div><div class="ex-sc">4×15</div></div><div class="ex-row cardio-r"><div class="ex-dot" style="background:var(--org)"></div><div class="ex-nm">Incline Treadmill Walk LISS</div><div class="ex-sc">30min</div></div></div></div>
+      <div class="day-card" style="border-top:3px solid var(--legs)"><div class="dc-head"><div><div class="dc-day">Friday</div><div class="dc-session c-red">LEGS ⚠️</div></div><span class="dc-chip bg-red c-red">Glute + ham bias</span></div><div class="ex-wrap"><div class="ex-row main"><div class="ex-dot" style="background:var(--red)"></div><div class="ex-nm">Sumo Deadlift</div><div class="ex-sc">5×5</div></div><div class="ex-row main"><div class="ex-dot" style="background:var(--red)"></div><div class="ex-nm">Barbell Hip Thrust (Heavy)</div><div class="ex-sc">5×10</div></div><div class="ex-row main"><div class="ex-dot" style="background:var(--red)"></div><div class="ex-nm">Hack Squat (Deep ROM)</div><div class="ex-sc">4×12</div></div><div class="ex-row iso"><div class="ex-dot" style="background:var(--muted)"></div><div class="ex-nm">Leg Extension + Leg Curl (SS)</div><div class="ex-sc">4×15+15</div></div><div class="ex-row iso"><div class="ex-dot" style="background:var(--muted)"></div><div class="ex-nm">Nordic Hamstring Curl</div><div class="ex-sc">4×8</div></div><div class="ex-row iso"><div class="ex-dot" style="background:var(--muted)"></div><div class="ex-nm">Cable Glute Kickback</div><div class="ex-sc">4×15ea</div></div><div class="ex-row iso"><div class="ex-dot" style="background:var(--muted)"></div><div class="ex-nm">Seated Calf Raise (Drop set)</div><div class="ex-sc">5×20+DS</div></div></div><div class="divider"><span>Abs</span></div><div class="ex-wrap"><div class="ex-row abs"><div class="ex-dot" style="background:var(--yel)"></div><div class="ex-nm">Pallof Press</div><div class="ex-sc">4×12ea</div></div><div class="ex-row abs"><div class="ex-dot" style="background:var(--yel)"></div><div class="ex-nm">V-Ups</div><div class="ex-sc">4×15</div></div></div></div>
+    </div>
+  </div>
+  <div class="week-blk"><div class="wk-hd" onclick="toggleWk(this)"><div class="wk-hd-l"><div class="wk-num">W6</div><div><div class="wk-title">Progressive Overload</div><div class="wk-sub">+2.5–5kg all compounds · add 1 set · AMRAP last sets</div></div></div><div style="display:flex;align-items:center;gap:9px"><span class="wk-badge" style="background:var(--pur2);color:var(--pur)">+Load</span><span class="wk-chev">›</span></div></div>
+    <div class="days-wrap"><div class="day-card" style="border-top:3px solid var(--pur);grid-column:1/-1"><div class="dc-head"><div><div class="dc-day">All 5 Days</div><div class="dc-session c-pur">SAME SPLIT</div></div><span class="dc-chip bg-pur c-pur">Progressive increase</span></div><div class="ex-wrap"><div class="ex-row main"><div class="ex-dot" style="background:var(--pur)"></div><div class="ex-nm">All compounds: +2.5–5kg from W5</div><div class="ex-sc">4–5 sets</div></div><div class="ex-row main"><div class="ex-dot" style="background:var(--pur)"></div><div class="ex-nm">Add 1 extra working set to each compound</div><div class="ex-sc">+1 set</div></div><div class="ex-row iso"><div class="ex-dot" style="background:var(--muted)"></div><div class="ex-nm">Isolations: same weight, target +2 reps</div><div class="ex-sc">+2 reps</div></div><div class="ex-row iso"><div class="ex-dot" style="background:var(--muted)"></div><div class="ex-nm">Last set each compound: AMRAP</div><div class="ex-sc">AMRAP</div></div><div class="ex-row abs"><div class="ex-dot" style="background:var(--yel)"></div><div class="ex-nm">Abs: add weight to cable crunch and decline crunch</div><div class="ex-sc">Progressive</div></div><div class="ex-row cardio-r"><div class="ex-dot" style="background:var(--org)"></div><div class="ex-nm">Cardio: HIIT Mon+Thu · LISS Wed · Walk Sat</div><div class="ex-sc">4 sessions</div></div></div></div></div>
+  </div>
+  <div class="week-blk"><div class="wk-hd" onclick="toggleWk(this)"><div class="wk-hd-l"><div class="wk-num">W7</div><div><div class="wk-title">Intensity Techniques Week</div><div class="wk-sub">Rest-pause · mechanical drops · 21s · partial reps finishers · HIIT escalated</div></div></div><div style="display:flex;align-items:center;gap:9px"><span class="wk-badge" style="background:var(--red2);color:var(--red)">Max Intensity</span><span class="wk-chev">›</span></div></div>
+    <div class="days-wrap">
+      <div class="day-card" style="border-top:3px solid var(--upper)"><div class="dc-head"><div><div class="dc-day">Monday</div><div class="dc-session c-blue">UPPER</div></div><span class="dc-chip bg-blue c-blue">Rest-pause</span></div><div class="ex-wrap"><div class="ex-row main"><div class="ex-dot" style="background:var(--blue)"></div><div class="ex-nm">Bench Press (Rest-pause last set)</div><div class="ex-sc">4×8+RP</div></div><div class="ex-row main"><div class="ex-dot" style="background:var(--blue)"></div><div class="ex-nm">Barbell Row (3-0-1 tempo)</div><div class="ex-sc">4×10</div></div><div class="ex-row main"><div class="ex-dot" style="background:var(--blue)"></div><div class="ex-nm">OHP Barbell</div><div class="ex-sc">4×8</div></div><div class="ex-row iso"><div class="ex-dot" style="background:var(--muted)"></div><div class="ex-nm">Mech Drop: Incline→Flat→Decline DB</div><div class="ex-sc">3 drops</div></div><div class="ex-row iso"><div class="ex-dot" style="background:var(--muted)"></div><div class="ex-nm">Mech Drop: Wide→Close Lat Pulldown</div><div class="ex-sc">3 drops</div></div><div class="ex-row iso"><div class="ex-dot" style="background:var(--muted)"></div><div class="ex-nm">Lateral Raise + Partials finisher</div><div class="ex-sc">4×15+20p</div></div><div class="ex-row iso"><div class="ex-dot" style="background:var(--muted)"></div><div class="ex-nm">Barbell Curl 21s</div><div class="ex-sc">3×21</div></div></div><div class="divider"><span>Abs + Cardio HIIT</span></div><div class="ex-wrap"><div class="ex-row abs"><div class="ex-dot" style="background:var(--yel)"></div><div class="ex-nm">Dragon Flag (Negatives)</div><div class="ex-sc">3×6</div></div><div class="ex-row abs"><div class="ex-dot" style="background:var(--yel)"></div><div class="ex-nm">Cable Crunch</div><div class="ex-sc">4×15</div></div><div class="ex-row cardio-r"><div class="ex-dot" style="background:var(--red)"></div><div class="ex-nm">Treadmill Sprints: 20s@12km/h / 50s walk × 10</div><div class="ex-sc">18min HIIT</div></div></div></div>
+      <div class="day-card" style="border-top:3px solid var(--lower)"><div class="dc-head"><div><div class="dc-day">Tuesday</div><div class="dc-session c-org">LOWER</div></div><span class="dc-chip bg-org c-org">Pause squats</span></div><div class="ex-wrap"><div class="ex-row main"><div class="ex-dot" style="background:var(--org)"></div><div class="ex-nm">Pause Squat (2s at bottom)</div><div class="ex-sc">5×6</div></div><div class="ex-row main"><div class="ex-dot" style="background:var(--org)"></div><div class="ex-nm">Romanian Deadlift</div><div class="ex-sc">4×10</div></div><div class="ex-row main"><div class="ex-dot" style="background:var(--org)"></div><div class="ex-nm">Bulgarian Split Squat (Rest-pause)</div><div class="ex-sc">4×10+RP</div></div><div class="ex-row iso"><div class="ex-dot" style="background:var(--muted)"></div><div class="ex-nm">Leg Press (High foot, glute bias)</div><div class="ex-sc">4×15</div></div><div class="ex-row iso"><div class="ex-dot" style="background:var(--muted)"></div><div class="ex-nm">Lying Leg Curl (Rest-pause)</div><div class="ex-sc">4×12+RP</div></div><div class="ex-row iso"><div class="ex-dot" style="background:var(--muted)"></div><div class="ex-nm">Seated Calf Raise</div><div class="ex-sc">5×20</div></div></div><div class="divider"><span>Abs + Cardio LISS</span></div><div class="ex-wrap"><div class="ex-row abs"><div class="ex-dot" style="background:var(--yel)"></div><div class="ex-nm">Hanging Leg Raise</div><div class="ex-sc">4×12</div></div><div class="ex-row abs"><div class="ex-dot" style="background:var(--yel)"></div><div class="ex-nm">Pallof Press</div><div class="ex-sc">4×12ea</div></div><div class="ex-row cardio-r"><div class="ex-dot" style="background:var(--org)"></div><div class="ex-nm">Elliptical LISS (low impact)</div><div class="ex-sc">25min</div></div></div></div>
+      <div class="day-card" style="border-top:3px solid var(--push)"><div class="dc-head"><div><div class="dc-day">Wednesday</div><div class="dc-session c-pur">PUSH</div></div><span class="dc-chip bg-pur c-pur">Mech drops</span></div><div class="ex-wrap"><div class="ex-row main"><div class="ex-dot" style="background:var(--pur)"></div><div class="ex-nm">Incline BB Press</div><div class="ex-sc">5×8</div></div><div class="ex-row main"><div class="ex-dot" style="background:var(--pur)"></div><div class="ex-nm">OHP Smith (Rest-pause)</div><div class="ex-sc">4×10+RP</div></div><div class="ex-row iso"><div class="ex-dot" style="background:var(--muted)"></div><div class="ex-nm">Chest: Pec Deck→Cable Fly→Pushup</div><div class="ex-sc">3 drops</div></div><div class="ex-row iso"><div class="ex-dot" style="background:var(--muted)"></div><div class="ex-nm">Delts: Seated→Bent-Over→Partials</div><div class="ex-sc">3 drops</div></div><div class="ex-row iso"><div class="ex-dot" style="background:var(--muted)"></div><div class="ex-nm">Skull Crushers</div><div class="ex-sc">4×12</div></div><div class="ex-row iso"><div class="ex-dot" style="background:var(--muted)"></div><div class="ex-nm">Weighted Dips AMRAP last set</div><div class="ex-sc">4×10+F</div></div></div><div class="divider"><span>Abs + Cardio HIIT</span></div><div class="ex-wrap"><div class="ex-row abs"><div class="ex-dot" style="background:var(--yel)"></div><div class="ex-nm">Ab Wheel Rollout</div><div class="ex-sc">4×12</div></div><div class="ex-row abs"><div class="ex-dot" style="background:var(--yel)"></div><div class="ex-nm">Side Plank + Hip Dip</div><div class="ex-sc">3×15ea</div></div><div class="ex-row cardio-r"><div class="ex-dot" style="background:var(--red)"></div><div class="ex-nm">Bike Sprints HIIT: 20s max / 40s × 12</div><div class="ex-sc">16min</div></div></div></div>
+      <div class="day-card" style="border-top:3px solid var(--pull)"><div class="dc-head"><div><div class="dc-day">Thursday</div><div class="dc-session c-grn">PULL</div></div><span class="dc-chip bg-grn c-grn">Curl mech drop</span></div><div class="ex-wrap"><div class="ex-row main"><div class="ex-dot" style="background:var(--grn)"></div><div class="ex-nm">Weighted Pull-Up (+12.5kg)</div><div class="ex-sc">5×8</div></div><div class="ex-row main"><div class="ex-dot" style="background:var(--grn)"></div><div class="ex-nm">T-Bar Row (Rest-pause)</div><div class="ex-sc">4×10+RP</div></div><div class="ex-row iso"><div class="ex-dot" style="background:var(--muted)"></div><div class="ex-nm">Lat Pulldown (Wide, 2s stretch)</div><div class="ex-sc">4×12</div></div><div class="ex-row iso"><div class="ex-dot" style="background:var(--muted)"></div><div class="ex-nm">Straight-Arm Pulldown</div><div class="ex-sc">4×15</div></div><div class="ex-row iso"><div class="ex-dot" style="background:var(--muted)"></div><div class="ex-nm">Curl Mech Drop: Incline→Standing→Concentration</div><div class="ex-sc">3 drops</div></div><div class="ex-row iso"><div class="ex-dot" style="background:var(--muted)"></div><div class="ex-nm">Rear Delt Cable Fly</div><div class="ex-sc">4×20</div></div></div><div class="divider"><span>Abs + Cardio LISS</span></div><div class="ex-wrap"><div class="ex-row abs"><div class="ex-dot" style="background:var(--yel)"></div><div class="ex-nm">Dragon Flag Negatives</div><div class="ex-sc">4×5</div></div><div class="ex-row abs"><div class="ex-dot" style="background:var(--yel)"></div><div class="ex-nm">Cable Crunch</div><div class="ex-sc">4×15</div></div><div class="ex-row cardio-r"><div class="ex-dot" style="background:var(--org)"></div><div class="ex-nm">Incline Treadmill LISS</div><div class="ex-sc">30min</div></div></div></div>
+      <div class="day-card" style="border-top:3px solid var(--legs)"><div class="dc-head"><div><div class="dc-day">Friday</div><div class="dc-session c-red">LEGS ⚠️</div></div><span class="dc-chip bg-red c-red">Mech drop legs</span></div><div class="ex-wrap"><div class="ex-row main"><div class="ex-dot" style="background:var(--red)"></div><div class="ex-nm">Conventional Deadlift (Heavy)</div><div class="ex-sc">5×5</div></div><div class="ex-row main"><div class="ex-dot" style="background:var(--red)"></div><div class="ex-nm">Quad Mech Drop: Hack→Leg Press→Wall Sit</div><div class="ex-sc">3 drops</div></div><div class="ex-row main"><div class="ex-dot" style="background:var(--red)"></div><div class="ex-nm">Hip Thrust (Rest-pause)</div><div class="ex-sc">5×10+RP</div></div><div class="ex-row iso"><div class="ex-dot" style="background:var(--muted)"></div><div class="ex-nm">Leg Extension (3 drop sets)</div><div class="ex-sc">4 drops</div></div><div class="ex-row iso"><div class="ex-dot" style="background:var(--muted)"></div><div class="ex-nm">Nordic Hamstring Curl</div><div class="ex-sc">4×8</div></div><div class="ex-row iso"><div class="ex-dot" style="background:var(--muted)"></div><div class="ex-nm">Standing Calf Raise + Partials</div><div class="ex-sc">5×20+20p</div></div></div><div class="divider"><span>Abs</span></div><div class="ex-wrap"><div class="ex-row abs"><div class="ex-dot" style="background:var(--yel)"></div><div class="ex-nm">Hanging Leg Raise (Weighted)</div><div class="ex-sc">4×12</div></div><div class="ex-row abs"><div class="ex-dot" style="background:var(--yel)"></div><div class="ex-nm">Ab Wheel Rollout</div><div class="ex-sc">4×12</div></div></div></div>
+    </div>
+  </div>
+  <div class="week-blk"><div class="wk-hd" onclick="toggleWk(this)"><div class="wk-hd-l"><div class="wk-num">W8</div><div><div class="wk-title">Deload + InBody Check #2</div><div class="wk-sub">–35% load · Book InBody scan end of week · assess + adjust Phase 3</div></div></div><div style="display:flex;align-items:center;gap:9px"><span class="wk-badge" style="background:var(--grn2);color:var(--grn)">Deload</span><span class="wk-chev">›</span></div></div>
+    <div class="days-wrap"><div class="day-card" style="border-top:3px solid var(--muted);grid-column:1/-1"><div class="dc-head"><div><div class="dc-day">Week 8</div><div class="dc-session" style="color:var(--grn)">DELOAD + ASSESS</div></div><span class="dc-chip" style="background:var(--grn2);color:var(--grn)">InBody week</span></div><div class="ex-wrap"><div class="ex-row iso"><div class="ex-dot" style="background:var(--muted)"></div><div class="ex-nm">Same split · –35–40% all loads · no intensity techniques</div><div class="ex-sc">3×8</div></div><div class="ex-row abs"><div class="ex-dot" style="background:var(--yel)"></div><div class="ex-nm">Light abs only — Plank + Dead Bug + Pallof Press</div><div class="ex-sc">3×30s</div></div><div class="ex-row cardio-r"><div class="ex-dot" style="background:var(--org)"></div><div class="ex-nm">2× LISS walks only · no HIIT this week</div><div class="ex-sc">35min ea</div></div><div class="ex-row main"><div class="ex-dot" style="background:var(--grn)"></div><div class="ex-nm">📊 InBody Scan — Friday/Sat · same time as Week 1</div><div class="ex-sc">Check #2</div></div><div class="ex-row main"><div class="ex-dot" style="background:var(--grn)"></div><div class="ex-nm">Expected: BF –3–4% · Muscle +1–1.5kg · Legs improving ✓</div><div class="ex-sc">Benchmark</div></div></div></div></div>
+  </div>
+</div>
+
+<!-- ══ PHASE 3 TAB ══ -->
+<div class="tab" id="tab-p3">
+  <div class="phase-banner" style="background:linear-gradient(135deg,#7f1d1d,#dc2626)" data-bg="P3">
+    <div class="pb-tag">Phase 3 · Weeks 9–12</div>
+    <div class="pb-title">STRENGTH & PEAK</div>
+    <div class="pb-desc">Lower reps, heavier loads. You will hit personal records. Cardio peaks at 4 sessions per week. Body fat approaching 15–16%. Final InBody on Day 90. Increase protein to 185g+ to protect muscle from elevated cardio stress.</div>
+    <div class="pb-meta">
+      <div class="pb-m"><div class="pb-mk">Sets</div><div class="pb-mv">4–6 compounds</div></div>
+      <div class="pb-m"><div class="pb-mk">Reps</div><div class="pb-mv">5–8 compounds · 12–15 iso</div></div>
+      <div class="pb-m"><div class="pb-mk">RPE</div><div class="pb-mv">9–10 last sets</div></div>
+      <div class="pb-m"><div class="pb-mk">Goal</div><div class="pb-mv">PR every compound</div></div>
+      <div class="pb-m"><div class="pb-mk">Protein</div><div class="pb-mv">185g+ daily</div></div>
+      <div class="pb-m"><div class="pb-mk">Cardio</div><div class="pb-mv">HIIT escalated · 4×/wk</div></div>
+    </div>
+  </div>
+  <div class="week-blk"><div class="wk-hd" onclick="toggleWk(this)"><div class="wk-hd-l"><div class="wk-num">W9</div><div><div class="wk-title">Strength Introduction</div><div class="wk-sub">Rep ranges drop to 5–8 on compounds · heaviest weights of the program</div></div></div><div style="display:flex;align-items:center;gap:9px"><span class="wk-badge" style="background:var(--red2);color:var(--red)">Strength</span><span class="wk-chev">›</span></div></div>
+    <div class="days-wrap open">
+      <div class="day-card" style="border-top:3px solid var(--upper)"><div class="dc-head"><div><div class="dc-day">Monday</div><div class="dc-session c-blue">UPPER</div></div><span class="dc-chip bg-blue c-blue">5×6 bench</span></div><div class="ex-wrap"><div class="ex-row main"><div class="ex-dot" style="background:var(--blue)"></div><div class="ex-nm">Barbell Bench Press (Heaviest ever)</div><div class="ex-sc">5×6</div></div><div class="ex-row main"><div class="ex-dot" style="background:var(--blue)"></div><div class="ex-nm">Barbell Row (Heavy)</div><div class="ex-sc">5×6</div></div><div class="ex-row main"><div class="ex-dot" style="background:var(--blue)"></div><div class="ex-nm">OHP Barbell</div><div class="ex-sc">4×8</div></div><div class="ex-row iso"><div class="ex-dot" style="background:var(--muted)"></div><div class="ex-nm">Incline DB Press</div><div class="ex-sc">4×10</div></div><div class="ex-row iso"><div class="ex-dot" style="background:var(--muted)"></div><div class="ex-nm">Lat Pulldown + Cable Row (SS)</div><div class="ex-sc">4×12+12</div></div><div class="ex-row iso"><div class="ex-dot" style="background:var(--muted)"></div><div class="ex-nm">DB Lateral Raise</div><div class="ex-sc">4×15</div></div><div class="ex-row iso"><div class="ex-dot" style="background:var(--muted)"></div><div class="ex-nm">Barbell Curl (Heavy)</div><div class="ex-sc">4×8</div></div></div><div class="divider"><span>Abs + Cardio HIIT</span></div><div class="ex-wrap"><div class="ex-row abs"><div class="ex-dot" style="background:var(--yel)"></div><div class="ex-nm">Dragon Flag</div><div class="ex-sc">4×6</div></div><div class="ex-row abs"><div class="ex-dot" style="background:var(--yel)"></div><div class="ex-nm">Weighted Cable Crunch</div><div class="ex-sc">4×15</div></div><div class="ex-row cardio-r"><div class="ex-dot" style="background:var(--red)"></div><div class="ex-nm">Jump Rope HIIT: 30s / 45s rest × 14 rounds</div><div class="ex-sc">20min</div></div></div></div>
+      <div class="day-card" style="border-top:3px solid var(--lower)"><div class="dc-head"><div><div class="dc-day">Tuesday</div><div class="dc-session c-org">LOWER</div></div><span class="dc-chip bg-org c-org">5×6 squat</span></div><div class="ex-wrap"><div class="ex-row main"><div class="ex-dot" style="background:var(--org)"></div><div class="ex-nm">Barbell Back Squat (Max week)</div><div class="ex-sc">5×6</div></div><div class="ex-row main"><div class="ex-dot" style="background:var(--org)"></div><div class="ex-nm">Romanian Deadlift</div><div class="ex-sc">4×8</div></div><div class="ex-row main"><div class="ex-dot" style="background:var(--org)"></div><div class="ex-nm">Bulgarian Split Squat (Heaviest)</div><div class="ex-sc">4×8ea</div></div><div class="ex-row iso"><div class="ex-dot" style="background:var(--muted)"></div><div class="ex-nm">Leg Press (Heavy)</div><div class="ex-sc">4×12</div></div><div class="ex-row iso"><div class="ex-dot" style="background:var(--muted)"></div><div class="ex-nm">Lying Leg Curl</div><div class="ex-sc">4×12</div></div><div class="ex-row iso"><div class="ex-dot" style="background:var(--muted)"></div><div class="ex-nm">Standing Calf Raise</div><div class="ex-sc">5×15</div></div></div><div class="divider"><span>Abs + Cardio LISS</span></div><div class="ex-wrap"><div class="ex-row abs"><div class="ex-dot" style="background:var(--yel)"></div><div class="ex-nm">Hanging Leg Raise (Weighted)</div><div class="ex-sc">4×12</div></div><div class="ex-row abs"><div class="ex-dot" style="background:var(--yel)"></div><div class="ex-nm">Pallof Press</div><div class="ex-sc">4×15ea</div></div><div class="ex-row cardio-r"><div class="ex-dot" style="background:var(--org)"></div><div class="ex-nm">Elliptical LISS (easy on joints)</div><div class="ex-sc">25min</div></div></div></div>
+      <div class="day-card" style="border-top:3px solid var(--push)"><div class="dc-head"><div><div class="dc-day">Wednesday</div><div class="dc-session c-pur">PUSH</div></div><span class="dc-chip bg-pur c-pur">PR prep</span></div><div class="ex-wrap"><div class="ex-row main"><div class="ex-dot" style="background:var(--pur)"></div><div class="ex-nm">Flat Barbell Bench (Heavy)</div><div class="ex-sc">5×6</div></div><div class="ex-row main"><div class="ex-dot" style="background:var(--pur)"></div><div class="ex-nm">OHP DB (Heavy)</div><div class="ex-sc">4×8</div></div><div class="ex-row iso"><div class="ex-dot" style="background:var(--muted)"></div><div class="ex-nm">Incline DB Press</div><div class="ex-sc">4×10</div></div><div class="ex-row iso"><div class="ex-dot" style="background:var(--muted)"></div><div class="ex-nm">Cable Fly</div><div class="ex-sc">4×15</div></div><div class="ex-row iso"><div class="ex-dot" style="background:var(--muted)"></div><div class="ex-nm">Lateral Raise</div><div class="ex-sc">4×15</div></div><div class="ex-row iso"><div class="ex-dot" style="background:var(--muted)"></div><div class="ex-nm">Skull Crushers + Rope Pushdown (SS)</div><div class="ex-sc">4×10+15</div></div></div><div class="divider"><span>Abs + Cardio HIIT</span></div><div class="ex-wrap"><div class="ex-row abs"><div class="ex-dot" style="background:var(--yel)"></div><div class="ex-nm">Ab Wheel Rollout</div><div class="ex-sc">4×12</div></div><div class="ex-row abs"><div class="ex-dot" style="background:var(--yel)"></div><div class="ex-nm">Side Plank</div><div class="ex-sc">4×45s ea</div></div><div class="ex-row cardio-r"><div class="ex-dot" style="background:var(--red)"></div><div class="ex-nm">Bike Sprints HIIT: 20s max / 40s rest × 14</div><div class="ex-sc">18min</div></div></div></div>
+      <div class="day-card" style="border-top:3px solid var(--pull)"><div class="dc-head"><div><div class="dc-day">Thursday</div><div class="dc-session c-grn">PULL</div></div><span class="dc-chip bg-grn c-grn">Pull-Up PR</span></div><div class="ex-wrap"><div class="ex-row main"><div class="ex-dot" style="background:var(--grn)"></div><div class="ex-nm">Weighted Pull-Up (+15kg attempt)</div><div class="ex-sc">5×6</div></div><div class="ex-row main"><div class="ex-dot" style="background:var(--grn)"></div><div class="ex-nm">Barbell Row (Heavy)</div><div class="ex-sc">5×6</div></div><div class="ex-row iso"><div class="ex-dot" style="background:var(--muted)"></div><div class="ex-nm">Lat Pulldown (Wide)</div><div class="ex-sc">4×10</div></div><div class="ex-row iso"><div class="ex-dot" style="background:var(--muted)"></div><div class="ex-nm">Seated Cable Row</div><div class="ex-sc">4×12</div></div><div class="ex-row iso"><div class="ex-dot" style="background:var(--muted)"></div><div class="ex-nm">Barbell Curl (Heavy)</div><div class="ex-sc">4×8</div></div><div class="ex-row iso"><div class="ex-dot" style="background:var(--muted)"></div><div class="ex-nm">Face Pull + Rear Delt Fly (SS)</div><div class="ex-sc">4×15+15</div></div></div><div class="divider"><span>Abs + Cardio LISS</span></div><div class="ex-wrap"><div class="ex-row abs"><div class="ex-dot" style="background:var(--yel)"></div><div class="ex-nm">Dragon Flag</div><div class="ex-sc">4×6</div></div><div class="ex-row abs"><div class="ex-dot" style="background:var(--yel)"></div><div class="ex-nm">Hanging Leg Raise</div><div class="ex-sc">4×15</div></div><div class="ex-row cardio-r"><div class="ex-dot" style="background:var(--org)"></div><div class="ex-nm">Incline Treadmill Walk LISS</div><div class="ex-sc">30min</div></div></div></div>
+      <div class="day-card" style="border-top:3px solid var(--legs)"><div class="dc-head"><div><div class="dc-day">Friday</div><div class="dc-session c-red">LEGS ⚠️</div></div><span class="dc-chip bg-red c-red">Deadlift PR week</span></div><div class="ex-wrap"><div class="ex-row main"><div class="ex-dot" style="background:var(--red)"></div><div class="ex-nm">Conventional Deadlift (PR attempt)</div><div class="ex-sc">5×5</div></div><div class="ex-row main"><div class="ex-dot" style="background:var(--red)"></div><div class="ex-nm">Hack Squat (Heavy)</div><div class="ex-sc">5×8</div></div><div class="ex-row main"><div class="ex-dot" style="background:var(--red)"></div><div class="ex-nm">Hip Thrust Barbell (Heavy)</div><div class="ex-sc">5×8</div></div><div class="ex-row iso"><div class="ex-dot" style="background:var(--muted)"></div><div class="ex-nm">Leg Extension (Heavy)</div><div class="ex-sc">5×12</div></div><div class="ex-row iso"><div class="ex-dot" style="background:var(--muted)"></div><div class="ex-nm">Nordic Hamstring Curl</div><div class="ex-sc">5×8</div></div><div class="ex-row iso"><div class="ex-dot" style="background:var(--muted)"></div><div class="ex-nm">Standing Calf Raise</div><div class="ex-sc">5×20</div></div></div><div class="divider"><span>Abs</span></div><div class="ex-wrap"><div class="ex-row abs"><div class="ex-dot" style="background:var(--yel)"></div><div class="ex-nm">V-Ups + Pallof Press (SS)</div><div class="ex-sc">4×15+12</div></div></div></div>
+    </div>
+  </div>
+  <div class="week-blk"><div class="wk-hd" onclick="toggleWk(this)"><div class="wk-hd-l"><div class="wk-num">W10</div><div><div class="wk-title">🔥 PR Testing Week</div><div class="wk-sub">Test 5RM all major lifts · record everything · no isolation to failure</div></div></div><div style="display:flex;align-items:center;gap:9px"><span class="wk-badge" style="background:var(--red2);color:var(--red)">🔥 PR WEEK</span><span class="wk-chev">›</span></div></div>
+    <div class="days-wrap"><div class="day-card" style="border-top:3px solid var(--red);grid-column:1/-1"><div class="dc-head"><div><div class="dc-day">Mon–Fri</div><div class="dc-session c-red">PR TESTING</div></div><span class="dc-chip bg-red c-red">Max effort all week</span></div><div class="ex-wrap"><div class="ex-row main"><div class="ex-dot" style="background:var(--blue)"></div><div class="ex-nm">MON UPPER: Bench 5RM · Row 5RM · OHP 5RM</div><div class="ex-sc">1×5 @max</div></div><div class="ex-row main"><div class="ex-dot" style="background:var(--org)"></div><div class="ex-nm">TUE LOWER: Squat 5RM · RDL heavy · BSS PR</div><div class="ex-sc">1×5 @max</div></div><div class="ex-row main"><div class="ex-dot" style="background:var(--pur)"></div><div class="ex-nm">WED PUSH: Incline BB 5RM · Dips max BW reps</div><div class="ex-sc">1×5 @max</div></div><div class="ex-row main"><div class="ex-dot" style="background:var(--grn)"></div><div class="ex-nm">THU PULL: Weighted Pull-Up 5RM · Row 5RM</div><div class="ex-sc">1×5 @max</div></div><div class="ex-row main"><div class="ex-dot" style="background:var(--red)"></div><div class="ex-nm">FRI LEGS: Deadlift 3–5RM · Hip Thrust heavy · Hack PR</div><div class="ex-sc">1×3 @max</div></div><div class="ex-row iso"><div class="ex-dot" style="background:var(--muted)"></div><div class="ex-nm">After PR: 2–3 back-off sets isolations only · no failure</div><div class="ex-sc">light</div></div><div class="ex-row abs"><div class="ex-dot" style="background:var(--yel)"></div><div class="ex-nm">Abs: Plank + Dead Bug only all week</div><div class="ex-sc">2–3×30s</div></div><div class="ex-row cardio-r"><div class="ex-dot" style="background:var(--org)"></div><div class="ex-nm">Cardio: LISS only Mon + Thu · no HIIT PR week</div><div class="ex-sc">25min</div></div></div></div></div>
+  </div>
+  <div class="week-blk"><div class="wk-hd" onclick="toggleWk(this)"><div class="wk-hd-l"><div class="wk-num">W11</div><div><div class="wk-title">Volume Encore — Final Push</div><div class="wk-sub">90% of PR loads · hypertrophy rep ranges · peak cardio volume</div></div></div><div style="display:flex;align-items:center;gap:9px"><span class="wk-badge" style="background:var(--red2);color:var(--red)">Final Push</span><span class="wk-chev">›</span></div></div>
+    <div class="days-wrap">
+      <div class="day-card" style="border-top:3px solid var(--upper)"><div class="dc-head"><div><div class="dc-day">Monday</div><div class="dc-session c-blue">UPPER</div></div><span class="dc-chip bg-blue c-blue">90% PR loads</span></div><div class="ex-wrap"><div class="ex-row main"><div class="ex-dot" style="background:var(--blue)"></div><div class="ex-nm">Bench Press (90% of W10 PR)</div><div class="ex-sc">4×8</div></div><div class="ex-row main"><div class="ex-dot" style="background:var(--blue)"></div><div class="ex-nm">Barbell Row</div><div class="ex-sc">4×8</div></div><div class="ex-row main"><div class="ex-dot" style="background:var(--blue)"></div><div class="ex-nm">OHP Barbell</div><div class="ex-sc">4×8</div></div><div class="ex-row iso"><div class="ex-dot" style="background:var(--muted)"></div><div class="ex-nm">Cable Fly + Pec Deck (SS)</div><div class="ex-sc">4×15+15</div></div><div class="ex-row iso"><div class="ex-dot" style="background:var(--muted)"></div><div class="ex-nm">Straight-Arm Pulldown</div><div class="ex-sc">4×15</div></div><div class="ex-row iso"><div class="ex-dot" style="background:var(--muted)"></div><div class="ex-nm">Lateral Raise + Partials</div><div class="ex-sc">4×15+20p</div></div><div class="ex-row iso"><div class="ex-dot" style="background:var(--muted)"></div><div class="ex-nm">Curl + Pushdown (SS)</div><div class="ex-sc">4×12+15</div></div></div><div class="divider"><span>Abs + Cardio HIIT</span></div><div class="ex-wrap"><div class="ex-row abs"><div class="ex-dot" style="background:var(--yel)"></div><div class="ex-nm">Dragon Flag</div><div class="ex-sc">4×8</div></div><div class="ex-row abs"><div class="ex-dot" style="background:var(--yel)"></div><div class="ex-nm">Weighted Cable Crunch</div><div class="ex-sc">4×15</div></div><div class="ex-row cardio-r"><div class="ex-dot" style="background:var(--red)"></div><div class="ex-nm">Treadmill Sprints: 25s / 45s × 12</div><div class="ex-sc">20min HIIT</div></div></div></div>
+      <div class="day-card" style="border-top:3px solid var(--lower)"><div class="dc-head"><div><div class="dc-day">Tuesday</div><div class="dc-session c-org">LOWER</div></div><span class="dc-chip bg-org c-org">Squat volume</span></div><div class="ex-wrap"><div class="ex-row main"><div class="ex-dot" style="background:var(--org)"></div><div class="ex-nm">Back Squat (90% of PR)</div><div class="ex-sc">5×8</div></div><div class="ex-row main"><div class="ex-dot" style="background:var(--org)"></div><div class="ex-nm">Romanian Deadlift</div><div class="ex-sc">4×10</div></div><div class="ex-row main"><div class="ex-dot" style="background:var(--org)"></div><div class="ex-nm">Bulgarian Split Squat</div><div class="ex-sc">4×10ea</div></div><div class="ex-row iso"><div class="ex-dot" style="background:var(--muted)"></div><div class="ex-nm">Leg Press + Leg Extension (SS)</div><div class="ex-sc">4×15+15</div></div><div class="ex-row iso"><div class="ex-dot" style="background:var(--muted)"></div><div class="ex-nm">Lying Leg Curl</div><div class="ex-sc">4×12</div></div><div class="ex-row iso"><div class="ex-dot" style="background:var(--muted)"></div><div class="ex-nm">Calf Raise</div><div class="ex-sc">5×20</div></div></div><div class="divider"><span>Abs + Cardio LISS</span></div><div class="ex-wrap"><div class="ex-row abs"><div class="ex-dot" style="background:var(--yel)"></div><div class="ex-nm">Ab Wheel Rollout</div><div class="ex-sc">4×12</div></div><div class="ex-row abs"><div class="ex-dot" style="background:var(--yel)"></div><div class="ex-nm">Pallof Press</div><div class="ex-sc">4×12ea</div></div><div class="ex-row cardio-r"><div class="ex-dot" style="background:var(--org)"></div><div class="ex-nm">Elliptical LISS</div><div class="ex-sc">25min</div></div></div></div>
+      <div class="day-card" style="border-top:3px solid var(--push)"><div class="dc-head"><div><div class="dc-day">Wednesday</div><div class="dc-session c-pur">PUSH</div></div><span class="dc-chip bg-pur c-pur">Final chest</span></div><div class="ex-wrap"><div class="ex-row main"><div class="ex-dot" style="background:var(--pur)"></div><div class="ex-nm">Incline Barbell Press</div><div class="ex-sc">5×8</div></div><div class="ex-row main"><div class="ex-dot" style="background:var(--pur)"></div><div class="ex-nm">Flat DB Press</div><div class="ex-sc">4×10</div></div><div class="ex-row iso"><div class="ex-dot" style="background:var(--muted)"></div><div class="ex-nm">Chest Mech Drop: Fly→DB→Pushup</div><div class="ex-sc">3 drops</div></div><div class="ex-row iso"><div class="ex-dot" style="background:var(--muted)"></div><div class="ex-nm">Delt Mech Drop: Seated→Cable→Partials</div><div class="ex-sc">3 drops</div></div><div class="ex-row iso"><div class="ex-dot" style="background:var(--muted)"></div><div class="ex-nm">Skull Crushers</div><div class="ex-sc">4×12</div></div><div class="ex-row iso"><div class="ex-dot" style="background:var(--muted)"></div><div class="ex-nm">Rope Pushdown AMRAP</div><div class="ex-sc">4×F</div></div></div><div class="divider"><span>Abs + Cardio HIIT</span></div><div class="ex-wrap"><div class="ex-row abs"><div class="ex-dot" style="background:var(--yel)"></div><div class="ex-nm">Kneeling Cable Crunch</div><div class="ex-sc">4×15</div></div><div class="ex-row abs"><div class="ex-dot" style="background:var(--yel)"></div><div class="ex-nm">Side Plank</div><div class="ex-sc">4×45s ea</div></div><div class="ex-row cardio-r"><div class="ex-dot" style="background:var(--red)"></div><div class="ex-nm">Bike Sprints HIIT: 20s / 40s × 14</div><div class="ex-sc">18min</div></div></div></div>
+      <div class="day-card" style="border-top:3px solid var(--pull)"><div class="dc-head"><div><div class="dc-day">Thursday</div><div class="dc-session c-grn">PULL</div></div><span class="dc-chip bg-grn c-grn">Max back</span></div><div class="ex-wrap"><div class="ex-row main"><div class="ex-dot" style="background:var(--grn)"></div><div class="ex-nm">Weighted Pull-Up (PR+)</div><div class="ex-sc">5×8</div></div><div class="ex-row main"><div class="ex-dot" style="background:var(--grn)"></div><div class="ex-nm">T-Bar Row</div><div class="ex-sc">5×8</div></div><div class="ex-row iso"><div class="ex-dot" style="background:var(--muted)"></div><div class="ex-nm">Lat Pulldown Wide</div><div class="ex-sc">4×12</div></div><div class="ex-row iso"><div class="ex-dot" style="background:var(--muted)"></div><div class="ex-nm">Seated Cable Row</div><div class="ex-sc">4×12</div></div><div class="ex-row iso"><div class="ex-dot" style="background:var(--muted)"></div><div class="ex-nm">Incline DB Curl + Hammer Curl (SS)</div><div class="ex-sc">4×12+12</div></div><div class="ex-row iso"><div class="ex-dot" style="background:var(--muted)"></div><div class="ex-nm">Face Pull (High reps)</div><div class="ex-sc">4×25</div></div></div><div class="divider"><span>Abs + Cardio LISS</span></div><div class="ex-wrap"><div class="ex-row abs"><div class="ex-dot" style="background:var(--yel)"></div><div class="ex-nm">Dragon Flag</div><div class="ex-sc">4×8</div></div><div class="ex-row abs"><div class="ex-dot" style="background:var(--yel)"></div><div class="ex-nm">Hanging Leg Raise</div><div class="ex-sc">4×15</div></div><div class="ex-row cardio-r"><div class="ex-dot" style="background:var(--org)"></div><div class="ex-nm">Incline Treadmill Walk</div><div class="ex-sc">30min LISS</div></div></div></div>
+      <div class="day-card" style="border-top:3px solid var(--legs)"><div class="dc-head"><div><div class="dc-day">Friday</div><div class="dc-session c-red">LEGS ⚠️</div></div><span class="dc-chip bg-red c-red">Final leg blast</span></div><div class="ex-wrap"><div class="ex-row main"><div class="ex-dot" style="background:var(--red)"></div><div class="ex-nm">Conventional Deadlift (90% PR)</div><div class="ex-sc">5×5</div></div><div class="ex-row main"><div class="ex-dot" style="background:var(--red)"></div><div class="ex-nm">Hack Squat</div><div class="ex-sc">5×10</div></div><div class="ex-row main"><div class="ex-dot" style="background:var(--red)"></div><div class="ex-nm">Hip Thrust Barbell</div><div class="ex-sc">5×10</div></div><div class="ex-row iso"><div class="ex-dot" style="background:var(--muted)"></div><div class="ex-nm">Leg Extension + Leg Curl (SS)</div><div class="ex-sc">5×15+15</div></div><div class="ex-row iso"><div class="ex-dot" style="background:var(--muted)"></div><div class="ex-nm">Nordic Curl</div><div class="ex-sc">4×8</div></div><div class="ex-row iso"><div class="ex-dot" style="background:var(--muted)"></div><div class="ex-nm">Standing Calf Raise</div><div class="ex-sc">6×20</div></div></div><div class="divider"><span>Abs</span></div><div class="ex-wrap"><div class="ex-row abs"><div class="ex-dot" style="background:var(--yel)"></div><div class="ex-nm">V-Ups + Pallof Press</div><div class="ex-sc">4×15+12</div></div></div></div>
+    </div>
+  </div>
+  <div class="week-blk"><div class="wk-hd" onclick="toggleWk(this)"><div class="wk-hd-l"><div class="wk-num">W12</div><div><div class="wk-title">🏆 Day 90 — The Finish Line</div><div class="wk-sub">Light Mon–Thu · InBody scan Friday · Compare photos · Celebrate</div></div></div><div style="display:flex;align-items:center;gap:9px"><span class="wk-badge" style="background:var(--yel2);color:var(--yel)">🏆 DONE</span><span class="wk-chev">›</span></div></div>
+    <div class="days-wrap"><div class="day-card" style="border-top:3px solid var(--yel);grid-column:1/-1"><div class="dc-head"><div><div class="dc-day">Week 12 · Day 90</div><div class="dc-session c-yel">FINISH LINE</div></div><span class="dc-chip" style="background:var(--yel2);color:var(--yel)">You earned this</span></div><div class="ex-wrap"><div class="ex-row iso"><div class="ex-dot" style="background:var(--yel)"></div><div class="ex-nm">Mon–Thu: Light sessions · –40% load · enjoy it</div><div class="ex-sc">2–3×8</div></div><div class="ex-row main"><div class="ex-dot" style="background:var(--grn)"></div><div class="ex-nm">📊 Friday: InBody scan — same time of day as April 4 baseline</div><div class="ex-sc">Day 90</div></div><div class="ex-row main"><div class="ex-dot" style="background:var(--grn)"></div><div class="ex-nm">📸 Progress photos — front, side, back — compare to Day 1</div><div class="ex-sc">Document</div></div><div class="ex-row main"><div class="ex-dot" style="background:var(--blue)"></div><div class="ex-nm">Expected: Muscle 31–32.5kg · BF 16–18% · Score 82–86 · Legs normalised ✓</div><div class="ex-sc">Target</div></div><div class="ex-row main"><div class="ex-dot" style="background:var(--pur)"></div><div class="ex-nm">Plan next 12-week block immediately — don't lose momentum</div><div class="ex-sc">🔄 Cycle</div></div></div></div></div>
+  </div>
+
+  <div class="card" style="margin-top:8px">
+    <div class="card-title c-red">Coach Notes — Read Before Day 1</div>
+    <div class="note-blk" style="margin-top:0">
+      <div class="note-row"><span class="note-num">01</span><span class="note-tx"><strong style="color:var(--red)">Legs are the mission.</strong> Both flagged Under on InBody segmental. Treat Friday like the most important session of the week. Never skip it. Never replace with cardio.</span></div>
+      <div class="note-row"><span class="note-num">02</span><span class="note-tx"><strong style="color:var(--grn)">Plant protein 2 scoops post-gym = 50g.</strong> This is your anabolic window. Never skip it. If your plant protein is pea-only, add 2–3g leucine for better muscle protein synthesis.</span></div>
+      <div class="note-row"><span class="note-num">03</span><span class="note-tx"><strong style="color:var(--blue)">Technique key.</strong> SS = Superset · RP = Rest-Pause (10 breaths, continue) · AMRAP = As Many Reps As Possible · DS = Drop Set (–20% load, continue) · Mech Drop = Mechanical Drop Set (change angle, same weight) · F = To Failure · p = Partial reps.</span></div>
+      <div class="note-row"><span class="note-num">04</span><span class="note-tx"><strong style="color:var(--org)">Night shift optimization.</strong> Pre-gym at 2:30 PM = biggest carb meal. Post-gym shake within 30 min. Avoid heavy carbs after midnight. Magnesium before sleep every night without exception.</span></div>
+      <div class="note-row"><span class="note-num">05</span><span class="note-tx"><strong style="color:var(--pur)">Three InBody checkpoints.</strong> End of Week 4, Week 8, Day 90. Same time of day and hydration state each time. These are your scoreboard — trust the process between scans.</span></div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:12px">
+    <div class="card-title">90-Day Progress Targets</div>
+    <div class="trk-grid">
+      <div class="trk-card"><div class="trk-lbl">Muscle Mass</div><div class="trk-now c-blue">29.2 kg</div><div class="trk-goal">W4: ~30 kg<br>W8: ~31 kg<br>Day 90: 31–32.5 kg</div><div class="prog-bar"><div class="prog-fill" style="width:3%;background:var(--blue)"></div></div></div>
+      <div class="trk-card"><div class="trk-lbl">Body Fat %</div><div class="trk-now c-red">21.1%</div><div class="trk-goal">W4: 19–20%<br>W8: 17–18%<br>Day 90: 14–16%</div><div class="prog-bar"><div class="prog-fill" style="width:3%;background:var(--red)"></div></div></div>
+      <div class="trk-card"><div class="trk-lbl">InBody Score</div><div class="trk-now c-yel">77 pts</div><div class="trk-goal">W8: 80+<br>Day 90: 84–87</div><div class="prog-bar"><div class="prog-fill" style="width:2%;background:var(--yel)"></div></div></div>
+      <div class="trk-card"><div class="trk-lbl">Body Weight</div><div class="trk-now" style="color:var(--t2)">65.5 kg</div><div class="trk-goal">Day 90: 63–65 kg<br>Scale won't move much<br>Body comp is the goal</div><div class="prog-bar"><div class="prog-fill" style="width:50%;background:var(--muted)"></div></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ DAILY LOG TAB ══ -->
+<div class="tab" id="tab-log">
+  <div class="sec-hd"><div class="sec-tag" style="color:var(--org)">Daily Tracker</div><h2 style="color:var(--org)">DAILY LOG</h2><p>Log your day at end of each session. Data saves in your browser and persists across sessions. Navigate dates with the arrows below.</p></div>
+
+  <!-- DATE NAV -->
+  <div class="log-date-nav">
+    <div class="log-date-arrow" onclick="changeDate(-1)">‹</div>
+    <div class="log-date-label">
+      <div class="log-date-big" id="log-date-big">—</div>
+      <div class="log-date-sub" id="log-date-sub">—</div>
+      <div id="log-today-pill"></div>
+    </div>
+    <div class="log-date-arrow" onclick="changeDate(1)">›</div>
+  </div>
+
+  <!-- SESSION BADGE -->
+  <div id="log-session-wrap"></div>
+
+  <!-- HABITS -->
+  <div class="log-section">
+    <div class="log-sec-title" style="color:var(--yel)">⬡ Habits</div>
+    <div class="habit-list" id="log-habits"></div>
+  </div>
+
+  <!-- CARDIO -->
+  <div class="log-section">
+    <div class="log-sec-title" style="color:var(--org)">🏃 Cardio</div>
+    <div class="cardio-form-card">
+      <div class="form-row">
+        <div class="form-group">
+          <span class="form-lbl">Type</span>
+          <select class="form-sel" id="cardio-type">
+            <option value="">— Select —</option>
+            <option>Treadmill LISS</option><option>Treadmill HIIT Sprints</option>
+            <option>Stationary Bike LISS</option><option>Bike Sprints HIIT</option>
+            <option>Jump Rope HIIT</option><option>Elliptical LISS</option>
+            <option>Outdoor Walk</option><option>Skipped today</option>
+          </select>
+        </div>
+        <div class="form-group" style="max-width:80px">
+          <span class="form-lbl">Mins</span>
+          <input class="form-in" type="number" id="cardio-mins" placeholder="30" inputmode="numeric">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <span class="form-lbl">Feel</span>
+          <select class="form-sel" id="cardio-feel">
+            <option>😌 Easy</option><option selected>😤 Moderate</option><option>🔥 Hard</option>
+          </select>
+        </div>
+        <div class="form-group" style="max-width:80px">
+          <span class="form-lbl">Cal burn</span>
+          <input class="form-in" type="number" id="cardio-cals" placeholder="~" inputmode="numeric">
+        </div>
+      </div>
+      <button class="add-cardio-btn" onclick="addCardio()">+ ADD CARDIO</button>
+      <div id="cardio-done-list" class="cardio-done"></div>
+    </div>
+  </div>
+
+  <!-- WORKOUT LOG -->
+  <div class="log-section">
+    <div class="log-sec-title" style="color:var(--blue)">💪 Workout — Log Your Weights</div>
+    <div id="log-workout-list"></div>
+    <button onclick="openAddEx()" style="width:100%;padding:9px;background:var(--s1);border:1.5px dashed var(--border);border-radius:10px;font-family:'Outfit',sans-serif;font-size:12px;font-weight:700;color:var(--blue);cursor:pointer;margin-top:6px;">+ Add Custom Exercise</button>
+  </div>
+
+  <!-- MACROS -->
+  <div class="log-section">
+    <div class="log-sec-title" style="color:var(--grn)">🥗 Nutrition</div>
+    <div class="mac-sum" id="log-mac-sum"></div>
+    <div id="log-meals"></div>
+  </div>
+
+  <!-- BODY WEIGHT -->
+  <div class="log-section">
+    <div class="log-sec-title" style="color:var(--tel)">⚖️ Body Weight</div>
+    <div class="card">
+      <div class="bw-row">
+        <input class="num-in" type="number" id="bw-input" step="0.1" placeholder="65.5" inputmode="decimal" style="width:100px">
+        <span style="font-size:13px;color:var(--muted)">kg — today's weight</span>
+      </div>
+      <div class="bw-prev" id="bw-prev">Previous: — kg</div>
+    </div>
+  </div>
+
+  <!-- NOTES -->
+  <div class="log-section">
+    <div class="log-sec-title" style="color:var(--pur)">📝 Day Notes</div>
+    <div class="card">
+      <div style="font-size:12px;color:var(--muted)">Energy, soreness, mood, PRs, what to improve...</div>
+      <textarea class="notes-ta" id="day-notes" placeholder="Today felt..."></textarea>
+    </div>
+  </div>
+
+  <button class="save-log-btn" id="save-log-btn" onclick="saveDay()">SAVE DAY LOG</button>
+
+  <!-- HISTORY -->
+  <div class="log-section" style="margin-top:28px">
+    <div class="log-sec-title" style="color:var(--t2)">📅 History</div>
+    <div id="log-history"></div>
+  </div>
+
+</div>
+
+<!-- MODAL -->
+<div class="modal-ov" id="modal-ov" onclick="closeModalEv(event)">
+  <div class="modal"><div class="modal-handle"></div><div id="modal-inner"></div></div>
+</div>
+
+<script>
+// ═══ CONFIG ═══
+const WORKOUTS={
+  Mon:{session:'UPPER BODY',color:'#3b82f6',icon:'💪',exercises:['Barbell Bench Press','Barbell Bent-Over Row','Overhead Barbell Press','Incline DB Press','Cable Seated Row','DB Lateral Raise','Face Pull','Cable Crunch (ABS)','Hanging Knee Raise (ABS)']},
+  Tue:{session:'LOWER BODY',color:'#f97316',icon:'🦵',exercises:['Barbell Back Squat','Romanian Deadlift','Bulgarian Split Squat','Leg Press','Lying Leg Curl','Seated Calf Raise','Plank (ABS)','Pallof Press (ABS)']},
+  Wed:{session:'PUSH',color:'#a855f7',icon:'🫸',exercises:['Incline Barbell Press','DB Shoulder Press','Cable Fly','DB Lateral Raise','Skull Crushers','Cable Rope Pushdown','Weighted Dips','Ab Wheel Rollout (ABS)','Side Plank (ABS)']},
+  Thu:{session:'PULL',color:'#22c55e',icon:'🫷',exercises:['Weighted Pull-Up','T-Bar Row','Cable Lat Pulldown','Straight-Arm Pulldown','Incline DB Curl','Hammer Curl','Rear Delt Cable Fly','Hanging Leg Raise (ABS)','Dead Bug (ABS)']},
+  Fri:{session:'LEGS',color:'#ef4444',icon:'🦵',exercises:['Conventional Deadlift','Hack Squat','Walking DB Lunges','Leg Extension','Nordic Hamstring Curl','Hip Thrust Barbell','Standing Calf Raise','Copenhagen Plank (ABS)','V-Ups (ABS)']},
+  Sat:{session:'REST',color:'#4a4a60',icon:'😴',exercises:[]},
+  Sun:{session:'REST',color:'#4a4a60',icon:'😴',exercises:[]},
+};
+const MEAL_DEFS=[
+  {id:'b',label:'Breakfast 🌅',foods:[{name:'Overnight Oats 140g',cal:200,p:8,c:34,f:4},{name:'2 Boiled Eggs',cal:140,p:12,c:1,f:10},{name:'Plant Protein 1 scoop',cal:110,p:25,c:5,f:2}]},
+  {id:'l',label:'Lunch 🍗',foods:[{name:'White Rice 150g',cal:206,p:4,c:45,f:0},{name:'Air-Fried Chicken 170g',cal:285,p:52,c:0,f:7},{name:'Vegetable Salad',cal:50,p:2,c:10,f:0}]},
+  {id:'s',label:'Post-Gym Shake 🥤',foods:[{name:'Plant Protein 2 scoops',cal:220,p:50,c:10,f:4},{name:'Banana',cal:90,p:1,c:23,f:0}]},
+  {id:'d',label:'Dinner 🌙',foods:[{name:'Chicken Curry 170g',cal:300,p:40,c:8,f:11},{name:'Rice / 2 Rotis',cal:220,p:5,c:44,f:2},{name:'Dal 1 cup',cal:120,p:8,c:20,f:2}]},
+  {id:'ln',label:'Late Night 🌃',foods:[{name:'Greek Yogurt 200g',cal:130,p:14,c:8,f:4},{name:'Almonds 10 pcs',cal:70,p:2,c:2,f:6}]},
+];
+const MAC_TARGET={cal:2380,p:175,c:245,f:62};
+
+// ═══ STATE ═══
+let logDate=new Date();logDate.setHours(0,0,0,0);
+let allLogs={};
+
+function dk(d){d=d||logDate;return`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;}
+function dow(d){return['Sun','Mon','Tue','Wed','Thu','Fri','Sat'][(d||logDate).getDay()];}
+function emptyDay(key){
+  const d=new Date(key);const w=WORKOUTS[dow(d)]||WORKOUTS.Sun;
+  return{date:key,session:w.session,habits:{smoke:0,water:0,sleep:'',skin:false,supps:false,ashwagandha:false},cardio:[],bw:'',notes:'',
+    exercises:w.exercises.map(n=>({name:n,sets:[{kg:'',reps:'',feel:''}],notes:''})),
+    meals:JSON.parse(JSON.stringify(MEAL_DEFS))};
+}
+function getDay(){const k=dk();if(!allLogs[k])allLogs[k]=emptyDay(k);return allLogs[k];}
+function loadLogs(){try{const d=localStorage.getItem('fitosLog90');if(d)allLogs=JSON.parse(d);}catch(e){}}
+function saveLogs(){try{localStorage.setItem('fitosLog90',JSON.stringify(allLogs));}catch(e){}}
+
+// ═══ TABS ═══
+function switchTab(id,btn){
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('tab-'+id).classList.add('active');
+  btn.classList.add('active');
+  window.scrollTo({top:document.querySelector('.nav').offsetTop-5,behavior:'smooth'});
+  if(id==='log')renderLog();
+}
+
+// ═══ WEEK BLOCKS ═══
+function toggleWk(hd){
+  const w=hd.nextElementSibling;const ch=hd.querySelector('.wk-chev');
+  w.classList.toggle('open',!w.classList.contains('open'));
+  if(ch)ch.classList.toggle('open',w.classList.contains('open'));
+}
+function toggleCardio(hd){hd.nextElementSibling.classList.toggle('open');}
+
+// ═══ MACRO DAY ═══
+function setMacroDay(day,btn){
+  document.getElementById('macro-train').style.display=day==='train'?'block':'none';
+  document.getElementById('macro-rest').style.display=day==='rest'?'block':'none';
+  document.querySelectorAll('.dtb').forEach(b=>b.classList.remove('active'));btn.classList.add('active');
+}
+
+// ═══ LOG ═══
+function changeDate(delta){
+  logDate.setDate(logDate.getDate()+delta);
+  renderLog();
+}
+
+function renderLog(){
+  renderLogDate();renderLogSession();renderLogHabits();renderLogCardio();renderLogWorkout();renderLogMacros();renderLogBW();
+  const d=getDay();
+  document.getElementById('day-notes').value=d.notes||'';
+  renderLogHistory();
+  const btn=document.getElementById('save-log-btn');
+  btn.classList.remove('saved');btn.textContent='SAVE DAY LOG';
+}
+
+function renderLogDate(){
+  const days=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+  const mos=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  const d=logDate;
+  document.getElementById('log-date-big').textContent=`${days[d.getDay()].slice(0,3).toUpperCase()}, ${mos[d.getMonth()]} ${d.getDate()}`;
+  document.getElementById('log-date-sub').textContent=`${d.getFullYear()}`;
+  const today=new Date();today.setHours(0,0,0,0);
+  const pill=document.getElementById('log-today-pill');
+  pill.innerHTML=d.getTime()===today.getTime()?'<div class="today-pill">TODAY</div>':
+    d.getTime()<today.getTime()?'<div class="today-pill" style="background:var(--s3);color:var(--muted)">PAST</div>':
+    '<div class="today-pill" style="background:var(--org2);color:var(--org)">FUTURE</div>';
+}
+
+function renderLogSession(){
+  const w=WORKOUTS[dow()]||WORKOUTS.Sun;
+  document.getElementById('log-session-wrap').innerHTML=`
+    <div class="log-session" style="background:${w.color}22;border:1px solid ${w.color}44;margin-bottom:14px">
+      <div><h3 style="color:${w.color}">${w.session}</h3><p style="color:${w.color}99">Log your ${w.session==='REST'?'rest day':'weights & metrics'} below</p></div>
+      <div class="log-session-ic">${w.icon}</div>
+    </div>`;
+}
+
+function renderLogHabits(){
+  const d=getDay();const h=d.habits;
+  document.getElementById('log-habits').innerHTML=`
+    <div class="habit-counter">
+      <div class="hc-row">
+        <div class="hc-left"><div style="font-size:20px;width:28px;text-align:center">🚬</div><div><div class="habit-nm">Cigarettes</div><div class="habit-det">Goal: 0 by Month 3</div></div></div>
+        <div class="hc-btns">
+          <button class="ctr-btn ctr-m" onclick="updateSmoke(-1)">−</button>
+          <div class="ctr-val" id="smoke-ctr">${h.smoke||0}</div>
+          <button class="ctr-btn ctr-p" onclick="updateSmoke(1)">+</button>
+        </div>
+      </div>
+    </div>
+    <div style="background:var(--s1);border:1px solid var(--border);border-radius:13px;padding:13px 15px;">
+      <div style="display:flex;align-items:center;gap:11px;margin-bottom:4px"><div style="font-size:20px">💧</div><div><div class="habit-nm">Water</div><div class="habit-det">${h.water||0}/8 glasses</div></div></div>
+      <div class="water-dots" id="water-dots">${Array.from({length:8},(_,i)=>`<div class="wdot ${i<(h.water||0)?'fill':''}" onclick="setWater(${i+1})">${i<(h.water||0)?'💧':''}</div>`).join('')}</div>
+    </div>
+    <div style="background:var(--s1);border:1px solid var(--border);border-radius:13px;padding:13px 15px;">
+      <div style="display:flex;align-items:center;gap:11px;margin-bottom:2px"><div style="font-size:20px">😴</div><div><div class="habit-nm">Sleep</div><div class="habit-det">Target 7–9 hrs</div></div></div>
+      <div class="sleep-row"><input class="num-in" type="number" id="sleep-in" step="0.5" min="0" max="14" placeholder="7.5" inputmode="decimal" value="${h.sleep||''}" onchange="updateHabitVal('sleep',this.value)"><span style="font-size:13px;color:var(--muted)">hours</span></div>
+    </div>
+    ${['skin','supps','ashwagandha'].map(id=>{
+      const labels={skin:'✨ Skincare',supps:'💊 Creatine + Multivitamin + Calcium',ashwagandha:'🌿 Ashwagandha + Magnesium'};
+      const done=h[id];
+      return`<div class="habit-item ${done?'done':''}" onclick="toggleHabit('${id}')">
+        <div class="habit-left"><div class="habit-nm">${labels[id]}</div></div>
+        <div class="habit-check">${done?'✓':''}</div>
+      </div>`;
+    }).join('')}`;
+}
+
+function updateSmoke(d){const h=getDay().habits;h.smoke=Math.max(0,(h.smoke||0)+d);const el=document.getElementById('smoke-ctr');if(el)el.textContent=h.smoke;renderLogHabits();}
+function setWater(n){const h=getDay().habits;h.water=h.water===n?n-1:n;renderLogHabits();}
+function toggleHabit(id){const h=getDay().habits;h[id]=!h[id];renderLogHabits();}
+function updateHabitVal(id,val){getDay().habits[id]=val;}
+
+function renderLogCardio(){
+  const d=getDay();
+  const list=document.getElementById('cardio-done-list');
+  list.innerHTML=(d.cardio||[]).map((c,i)=>`
+    <div class="cardio-done-item">
+      <div><div class="cdi-nm">${c.type}</div><div class="cdi-sub">${c.mins} min · ${c.feel}${c.cals?' · '+c.cals+'kcal':''}</div></div>
+      <button class="cdi-del" onclick="removeCardio(${i})">✕</button>
+    </div>`).join('');
+}
+
+function addCardio(){
+  const t=document.getElementById('cardio-type').value;
+  const m=document.getElementById('cardio-mins').value;
+  const f=document.getElementById('cardio-feel').value;
+  const c=document.getElementById('cardio-cals').value;
+  if(!t||!m)return;
+  getDay().cardio.push({type:t,mins:m,feel:f,cals:c});
+  document.getElementById('cardio-mins').value='';document.getElementById('cardio-cals').value='';
+  renderLogCardio();
+}
+function removeCardio(i){getDay().cardio.splice(i,1);renderLogCardio();}
+
+function renderLogWorkout(){
+  const d=getDay();
+  const el=document.getElementById('log-workout-list');
+  if(!d.exercises||!d.exercises.length){el.innerHTML='<div style="text-align:center;padding:20px;color:var(--muted);font-size:13px">Rest day — no exercises</div>';return;}
+  el.innerHTML=d.exercises.map((ex,ei)=>{
+    const vol=ex.sets.reduce((a,s)=>a+((parseFloat(s.kg)||0)*(parseInt(s.reps)||0)),0);
+    return`<div class="ex-log-card">
+      <div class="ex-log-hd" onclick="toggleExLog(${ei})">
+        <div><div class="ex-log-nm">${ex.name}${vol>0?'<span class="pr-badge">'+Math.round(vol)+'kg</span>':''}</div><div class="ex-log-meta">${ex.sets.length} sets</div></div>
+        <span class="ex-log-chev" id="exch-${ei}">›</span>
+      </div>
+      <div class="ex-log-body" id="exbd-${ei}">
+        <div class="sets-hd"><span>#</span><span>Weight kg</span><span>Reps</span><span>Feel</span></div>
+        ${ex.sets.map((s,si)=>`
+          <div class="set-row">
+            <div class="set-n">${si+1}</div>
+            <input class="set-inp" type="number" step="0.5" placeholder="kg" value="${s.kg}" oninput="updateSet(${ei},${si},'kg',this.value)" inputmode="decimal">
+            <input class="set-inp" type="number" placeholder="reps" value="${s.reps}" oninput="updateSet(${ei},${si},'reps',this.value)" inputmode="numeric">
+            <div class="set-feel">
+              <button class="feel-btn ${s.feel==='e'?'fe':''}" onclick="setFeel(${ei},${si},'e')" title="Easy">😌</button>
+              <button class="feel-btn ${s.feel==='p'?'fp':''}" onclick="setFeel(${ei},${si},'p')" title="Good">💪</button>
+              <button class="feel-btn ${s.feel==='h'?'fh':''}" onclick="setFeel(${ei},${si},'h')" title="Hard">🔥</button>
+            </div>
+          </div>`).join('')}
+        <button class="add-set-btn" onclick="addSet(${ei})">+ Add Set</button>
+        <textarea class="ex-notes-in" placeholder="Notes" oninput="updateExNotes(${ei},this.value)">${ex.notes||''}</textarea>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function toggleExLog(ei){
+  const b=document.getElementById(`exbd-${ei}`);const c=document.getElementById(`exch-${ei}`);
+  b.classList.toggle('open');if(c)c.classList.toggle('open');
+}
+function updateSet(ei,si,f,v){const ex=getDay().exercises[ei];if(ex&&ex.sets[si])ex.sets[si][f]=v;}
+function setFeel(ei,si,feel){const s=getDay().exercises[ei].sets[si];s.feel=s.feel===feel?'':feel;renderLogWorkout();document.getElementById(`exbd-${ei}`).classList.add('open');document.getElementById(`exch-${ei}`).classList.add('open');}
+function addSet(ei){getDay().exercises[ei].sets.push({kg:'',reps:'',feel:''});renderLogWorkout();document.getElementById(`exbd-${ei}`).classList.add('open');document.getElementById(`exch-${ei}`).classList.add('open');}
+function updateExNotes(ei,v){getDay().exercises[ei].notes=v;}
+function openAddEx(){
+  showModal(`<h2>+ Add Exercise</h2>
+    <label class="m-lbl">Name</label>
+    <input class="m-in" id="ae-nm" placeholder="Exercise name">
+    <button class="m-btn m-primary" onclick="submitAddEx()">Add</button>
+    <button class="m-btn m-cancel" onclick="closeModal()">Cancel</button>`);
+}
+function submitAddEx(){const nm=document.getElementById('ae-nm').value.trim();if(!nm)return;getDay().exercises.push({name:nm,sets:[{kg:'',reps:'',feel:''}],notes:''});closeModal();renderLogWorkout();}
+
+function renderLogMacros(){
+  const d=getDay();let cal=0,p=0,c=0,f=0;
+  d.meals.forEach(m=>m.foods.forEach(fd=>{cal+=fd.cal||0;p+=fd.p||0;c+=fd.c||0;f+=fd.f||0;}));
+  document.getElementById('log-mac-sum').innerHTML=`
+    <div class="mac-pill"><div class="mac-pn" style="color:var(--blue)">${Math.round(cal)}</div><div class="mac-pl">kcal</div><div class="mac-pb"><div class="mac-pbf" style="width:${Math.min(100,cal/MAC_TARGET.cal*100)}%;background:var(--blue)"></div></div></div>
+    <div class="mac-pill"><div class="mac-pn" style="color:var(--grn)">${Math.round(p)}</div><div class="mac-pl">protein</div><div class="mac-pb"><div class="mac-pbf" style="width:${Math.min(100,p/MAC_TARGET.p*100)}%;background:var(--grn)"></div></div></div>
+    <div class="mac-pill"><div class="mac-pn" style="color:var(--org)">${Math.round(c)}</div><div class="mac-pl">carbs</div><div class="mac-pb"><div class="mac-pbf" style="width:${Math.min(100,c/MAC_TARGET.c*100)}%;background:var(--org)"></div></div></div>
+    <div class="mac-pill"><div class="mac-pn" style="color:var(--pur)">${Math.round(f)}</div><div class="mac-pl">fats</div><div class="mac-pb"><div class="mac-pbf" style="width:${Math.min(100,f/MAC_TARGET.f*100)}%;background:var(--pur)"></div></div></div>`;
+  document.getElementById('log-meals').innerHTML=d.meals.map((ml,mi)=>{
+    const mc=ml.foods.reduce((a,fd)=>a+(fd.cal||0),0);const mp=ml.foods.reduce((a,fd)=>a+(fd.p||0),0);
+    return`<div class="meal-log-card">
+      <div class="meal-log-hd" onclick="toggleMealLog(${mi})">
+        <div><div class="meal-log-nm">${ml.label}</div><div style="font-size:10px;color:var(--muted);margin-top:1px">${Math.round(mp)}g protein</div></div>
+        <div style="display:flex;align-items:center;gap:7px"><span class="meal-log-kcal">${Math.round(mc)} kcal</span><span style="color:var(--muted);font-size:13px">›</span></div>
+      </div>
+      <div class="meal-log-body" id="mlbd-${mi}">
+        ${ml.foods.map((fd,fi)=>`<div class="food-log-row"><div><div class="fln">${fd.name}</div><div class="flm">P:${fd.p}g C:${fd.c}g F:${fd.f}g</div></div><div style="display:flex;align-items:center;gap:5px"><span class="fl-kcal">${fd.cal}kcal</span><button class="fl-del" onclick="removeFood(${mi},${fi})">✕</button></div></div>`).join('')}
+        <button class="add-food-btn" onclick="openAddFood(${mi})">+ Add Food</button>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function toggleMealLog(mi){document.getElementById(`mlbd-${mi}`).classList.toggle('open');}
+function removeFood(mi,fi){getDay().meals[mi].foods.splice(fi,1);renderLogMacros();}
+function openAddFood(mi){
+  showModal(`<h2>🍽️ Add Food</h2>
+    <label class="m-lbl">Name</label><input class="m-in" id="af-nm" placeholder="e.g. Paneer 100g">
+    <div class="m-grid2">
+      <div><label class="m-lbl">Calories</label><input class="m-in" id="af-cal" type="number" placeholder="kcal" inputmode="numeric" style="margin:0"></div>
+      <div><label class="m-lbl">Protein g</label><input class="m-in" id="af-p" type="number" placeholder="g" inputmode="numeric" style="margin:0"></div>
+      <div><label class="m-lbl">Carbs g</label><input class="m-in" id="af-c" type="number" placeholder="g" inputmode="numeric" style="margin:0"></div>
+      <div><label class="m-lbl">Fats g</label><input class="m-in" id="af-f" type="number" placeholder="g" inputmode="numeric" style="margin:0"></div>
+    </div>
+    <button class="m-btn m-primary" style="margin-top:8px" onclick="submitFood(${mi})">Add</button>
+    <button class="m-btn m-cancel" onclick="closeModal()">Cancel</button>`);
+}
+function submitFood(mi){
+  const nm=document.getElementById('af-nm').value||'Food';
+  const cal=parseFloat(document.getElementById('af-cal').value)||0;const p=parseFloat(document.getElementById('af-p').value)||0;
+  const c=parseFloat(document.getElementById('af-c').value)||0;const f=parseFloat(document.getElementById('af-f').value)||0;
+  getDay().meals[mi].foods.push({name:nm,cal,p,c,f});closeModal();renderLogMacros();
+}
+
+function renderLogBW(){
+  const d=getDay();document.getElementById('bw-input').value=d.bw||'';
+  const ld=new Date(logDate);
+  for(let i=1;i<=7;i++){ld.setDate(ld.getDate()-1);const k=`${ld.getFullYear()}-${String(ld.getMonth()+1).padStart(2,'0')}-${String(ld.getDate()).padStart(2,'0')}`;if(allLogs[k]&&allLogs[k].bw){const pw=parseFloat(allLogs[k].bw);const cw=parseFloat(d.bw);const diff=cw&&pw?((cw-pw>=0)?'+':(''+(cw-pw).toFixed(1))+'kg'):''  ;document.getElementById('bw-prev').textContent=`Previous: ${pw}kg${diff?' ('+((cw-pw>=0?'+':'')+((cw-pw).toFixed(1)))+'kg)':''}`;return;}}
+  document.getElementById('bw-prev').textContent='Previous: — (first entry)';
+}
+
+function saveDay(){
+  const d=getDay();
+  d.bw=document.getElementById('bw-input').value;
+  d.habits.sleep=document.getElementById('sleep-in').value;
+  d.notes=document.getElementById('day-notes').value;
+  saveLogs();
+  const btn=document.getElementById('save-log-btn');
+  btn.classList.add('saved');btn.textContent='✓ SAVED!';
+  setTimeout(()=>{btn.classList.remove('saved');btn.textContent='SAVE DAY LOG';},2000);
+  renderLogHistory();
+}
+
+function renderLogHistory(){
+  const el=document.getElementById('log-history');
+  const keys=Object.keys(allLogs).sort().reverse().slice(0,20);
+  if(!keys.length){el.innerHTML='<div style="text-align:center;padding:20px;color:var(--muted);font-size:13px">No logs yet — save today to start</div>';return;}
+  const days=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];const mos=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  el.innerHTML=keys.map(k=>{
+    const d=allLogs[k];const date=new Date(k+'T12:00:00');
+    const meals=d.meals||[];const totCal=Math.round(meals.reduce((a,m)=>a+m.foods.reduce((b,f)=>b+(f.cal||0),0),0));const totP=Math.round(meals.reduce((a,m)=>a+m.foods.reduce((b,f)=>b+(f.p||0),0),0));
+    const exDone=d.exercises?d.exercises.filter(e=>e.sets.some(s=>s.kg||s.reps)).length:0;
+    const sessionColor={UPPER:'var(--blue)',LOWER:'var(--org)',PUSH:'var(--pur)',PULL:'var(--grn)',LEGS:'var(--red)',REST:'var(--muted)'}[d.session]||'var(--muted)';
+    return`<div class="hist-item" onclick="gotoDate('${k}')">
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <div class="hist-date">${days[date.getDay()]}, ${mos[date.getMonth()]} ${date.getDate()}</div>
+        <span style="padding:3px 9px;border-radius:100px;font-size:10px;font-weight:700;background:${sessionColor}22;color:${sessionColor}">${d.session}</span>
+      </div>
+      <div class="hist-sum">
+        ${d.bw?'⚖️ '+d.bw+'kg · ':''}${exDone?'💪 '+exDone+' ex · ':''}${totCal?'🔥 '+totCal+'kcal / '+totP+'g protein · ':''}${d.cardio&&d.cardio.length?'🏃 '+d.cardio.map(c=>c.type).join(', ')+' · ':''}${(d.habits?.smoke||0)>0?'🚬 '+d.habits.smoke+' · ':''}${d.habits?.water?'💧 '+d.habits.water+'/8':''}
+      </div>
+      ${d.notes?`<div class="hist-note">"${d.notes.slice(0,80)}${d.notes.length>80?'…':''}"</div>`:''}
+    </div>`;
+  }).join('');
+}
+
+function gotoDate(k){logDate=new Date(k+'T12:00:00');logDate.setHours(0,0,0,0);renderLog();}
+
+// ═══ MODAL ═══
+function showModal(h){document.getElementById('modal-inner').innerHTML=h;document.getElementById('modal-ov').classList.add('open');}
+function closeModalEv(e){if(e.target===document.getElementById('modal-ov'))closeModal();}
+function closeModal(){document.getElementById('modal-ov').classList.remove('open');}
+
+// ═══ INIT ═══
+loadLogs();
+</script>
+</body>
+</html>
